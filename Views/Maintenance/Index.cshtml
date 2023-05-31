@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_Maintenance_Mode.cshtml";
+}
+
+<div class="hero-image" style="background:url(Content/Images/m-img-banner.jpg) no-repeat;height: 400px;padding-top: 30px;background-size:cover;background-position: center center;">
+    <nav class="navbar navbar-light navbar-expand-md" style="background: rgba(0,0,0,0.2);max-height: 110px;top: -5px;">
+        <div class="container-fluid"></div>
+    </nav>
+</div>
+<div class=" text-center" style="padding: 0;">
+    <div class="" style="text-align:center">
+        <h2 class="title-heading" style="background: #4e71be;color: white;padding: 10px;margin:0">@Model.MaintenanceModeTitle</h2>
+        <p>@Model.MaintenanceModeMessage</p>
+    </div>
+</div>
+
+

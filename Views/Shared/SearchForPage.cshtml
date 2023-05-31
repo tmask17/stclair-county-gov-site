@@ -1,0 +1,89 @@
+﻿<!-- Modal For Searching -->
+<style>
+
+    #pageSearchModal .modal-body {
+        max-height: 65vh;
+        max-width: 80vw;
+        overflow-y: auto;
+        scrollbar-width: thin; /*fancy width*/
+        scrollbar-color: #f3f0dd #154734; /*fancy colors for Firefox*/
+        min-height: -webkit-fill-available;
+    }
+
+    div::-webkit-scrollbar {
+        width: 11px;
+    }
+
+    div::-webkit-scrollbar-track {
+        background: #B4B2B2;
+    }
+
+    div::-webkit-scrollbar-thumb {
+        background-color: #f3f0dd;
+        border-radius: 6px;
+        border: 3px solid #B4B2B2;
+    }
+
+    #slogo {
+        margin-left: -30px;
+    }
+
+        #slogo .image-bg {
+            width: 50px;
+            height: 50px;
+        }
+
+    .search-head {
+        font-size: calc(9px + 0.8vw);
+        margin-left: 10px;
+    }
+
+    #pageSearchModal .modal-header {
+        padding: 15px 50px 15px;
+    }
+
+    @@media (orientation: landscape) {
+        #pageSearchModal .modal-body {
+            max-height: 40vh;
+            min-height: -webkit-fill-available;
+        }
+    }
+</style>
+<div class="modal fade modaBlocks" id="pageSearchModal" tabindex="-1" role="dialog" aria-labelledby="pageSearchModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width:70%;height:70%;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="slogo">
+                </div>
+                <h5 class="modal-title search-head"><span id="text-title"></span><br /><span id="text-title2" style="margin-top:-20px"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="">
+                <!--Make sure the form has the autocomplete function switched off:-->
+                <div class="input-group">
+                    <div class="input-group-prepend"  id="inputGroupPrepend3" style="display:none">
+                        <span class="input-group-text">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                    <input id="pageSearchTextBox" type="text" placeholder="Type Keyword" class="form-control">
+                </div>
+
+                <div id="pageSearchResults" class="mt-2 border-top">
+                </div>
+                <div id="pageSearchNoResult" class="mt-2 border-top">
+                </div>
+            </div>
+            <div class="modal-footer modaBlocks" style="padding: 15px 50px 20px;position: relative;background: #0b5ca8;">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("text-title").innerText = document.title;
+    document.getElementById("text-title2").innerText = "Search Results";
+</script>

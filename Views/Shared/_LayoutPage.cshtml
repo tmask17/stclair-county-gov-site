@@ -1,0 +1,2430 @@
+﻿@model pagebuilder.Model.Page
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>@pagebuilder.Utils.Common.CompanyName</title>
+    @{ if (ViewBag.Class == "page-item")
+        {
+            <meta name="description" content="@ViewBag.Metades" />
+            <meta name="keywords" content="@ViewBag.Metakey" />
+        }
+    }
+    @{ if (ViewBag.Class == "home")
+        {
+            <meta name="description" content="@ViewBag.Metades" />
+            <meta name="keywords" content="@ViewBag.Metakey" />
+        }
+    }
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.standalone.css" rel="stylesheet" />
+    <link href="~/Content/jquery-customselect-1.9.1.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" href="~/ExtLinks/LinkImages/@ViewBag.Favicon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="~/Content/simple-iconpicker.min.css" rel='stylesheet' type='text/css' />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+    <style>
+	   .company-logo {
+                margin: 5%;
+                max-height: 150px;
+            }
+
+        .hcons {
+            margin-top: -10px;
+        }
+
+        .sli3 {
+            width: 47px;
+            height: 47px;
+            transition: 0.36s background;
+            padding: 0px;
+            font-size: 24px;
+            color: #fff;
+            background: rgba(195, 195, 195, 0.8);
+            border-radius: 50%;
+            text-align: center;
+            border: 0px;
+            vertical-align: middle;
+            display: inline-block;
+        }
+
+        #HomeLogo .image-bg{
+            opacity:unset;
+        }
+
+        .page-item-header #HomeLogo .image-bg {
+            display:block;
+        }
+        /*---- Modal Landscape fix ----- */
+
+        @@media (max-width: 767.98px) {
+            .sli3 {
+                width: 33px;
+                height: 33px;
+                font-size: 14px;
+            }
+        }
+
+        @@media (max-width: 575.98px) {
+            .sli3 {
+                width: 36px;
+                height: 36px;
+                padding: 5px;
+            }
+        }
+
+        @@media screen and (min-width:320px) and (max-width:767px) and (orientation: landscape) {
+            .modal {
+                max-height: 90% !important;
+                top: 5% !important;
+            }
+
+            .iphone-device-close-btn {
+                top: 20px !important;
+            }
+
+            .iphone-device-modal-title {
+                margin-top: 20px !important;
+            }
+
+            .iphone-device-header {
+                height: 75px !important;
+                padding: 15px !important;
+            }
+
+            .iphone-device-close-btn-location {
+                top: 30px !important;
+            }
+
+            .iphone-device-modal-title-location {
+                margin-top: 25px !important;
+            }
+        }
+
+        @@media screen and (orientation: landscape) {
+            div#modalBlock-10 .modal-content {
+                margin-top: 100px;
+            }
+
+            #ModalContact.modal-footer-blocks, #ModalEmail.modal-footer-blocks {
+                max-height: 50%;
+                top: 5%;
+            }
+        }
+
+        @@media screen and (orientation: portrait) {
+            #ModalContact.modal-footer-blocks, #ModalEmail.modal-footer-blocks {
+                max-height: 50%;
+                top: 20%;
+            }
+        }
+
+        @@media screen and (orientation: landscape) {
+            .modal-footer-blocks .modal-dialog,
+            .modal-footer-blocks .modal-content {
+                height: 100%;
+            }
+        }
+            /*---- End  Modal Landscape fix ----- */
+
+            .modal-footer-blocks .card-header {
+                padding: 5px !important;
+            }
+
+            .iphone-device-close-btn {
+                top: 20px !important;
+            }
+
+            .iphone-device-modal-title {
+                margin-top: 21px !important;
+            }
+
+            .iphone-device-close-btn-location {
+                top: 25px !important;
+            }
+
+            .iphone-device-modal-title-location {
+                margin-top: 25px !important;
+            }
+
+            .iphone-device-header {
+                height: 500px !important;
+                padding: 15px;
+            }
+            /*----- New Layout ------*/
+
+            header {
+                height: 500px;
+                padding-top: 30px;
+            }
+
+            .navbar_btn {
+                padding: 6px 0px 9px 0px;
+                color: #fff !important;
+                background: #22b24c;
+                border-color: #22b24c;
+                font-size: 24px;
+                z-index: 10;
+                line-height: 1;
+                width: 40px;
+            }
+
+                .navbar_btn:hover {
+                    color: #fff;
+                    background-color: #1a873a;
+                    border-color: #1a873a;
+                }
+
+            .sidebar-toggle.btn {
+                right: 14px;
+                border-color: #22b24c;
+                padding: 6px 13px 9px 15px;
+            }
+            /*----- New Layout ------*/
+            header .site-brand, header #SiteBrand, header #CompanyLogo {
+                width: @ViewBag.CompLogoWidthStr;
+                height: @ViewBag.CompLogoHeightStr;
+                background: round;
+                background-size: cover;
+            }
+
+            @@media (max-width: 880.98px) {
+                header .site-brand,
+                header #SiteBrand,
+                header #CompanyLogo {
+                    width: @ViewBag.CompLogoWidthMiniStr;
+                    height: @ViewBag.CompLogoHeightMiniStr;
+                    background: round;
+                    background-size: cover;
+                }
+            }
+
+            @@media (min-width: 517px) {
+                .company-logo {
+                    max-width: 375px;
+                }
+            }
+
+            @@media (max-width: 516px) {
+                .company-logo {
+                    max-width: 245px;
+                }
+            }
+
+            @@media (max-width: 360px) {
+                .company-logo {
+                    max-width: 230px;
+                }
+            }
+
+            /* --- Maintenanance Mode ==*/
+            @@media screen and (min-width:320px) and (max-width:400px) {
+                body {
+                    /*  width: 90% !important; */
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+
+                header {
+                    padding-top: 10px;
+                }
+
+                    header .head-content .main-content {
+                        padding: 5px !important;
+                        /* top: 65px; */
+                    }
+
+                    header .sli {
+                        width: 20px;
+                        height: 20px;
+                        font-size: 12px;
+                        padding: 0;
+                    }
+
+                .sli3 {
+                    width: 20px;
+                    height: 20px;
+                    font-size: 12px;
+                    padding: 0;
+                }
+
+                .hero-image {
+                    height: 30vh !important;
+                }
+
+                .navbar {
+                    flex-wrap: nowrap;
+                    height: 50px;
+                }
+
+                .navbar_btn {
+                    font-size: 0.9rem;
+                    padding: 5px;
+                    width: 30px;
+                }
+
+                .company-logo {
+                    /*  width: 100%;
+                    width: 200px !important; */
+                    max-height: 65px;
+                }
+
+                .social-media-icons-container {
+                    padding: 0 !important;
+                    top: 0 !important;
+                }
+
+                .carousel-title {
+                    font-size: 12px !important;
+                    font-weight: bold;
+                }
+
+                carousel-body {
+                    font-size: 10px !important;
+                }
+
+                .carousel-control-prev, .carousel-control-next {
+                    top: 60px;
+                }
+            }
+
+            /* --- Maintenanance Mode ==*/
+
+            .company-footer-logo {
+                max-height: 70px;
+            }
+
+            #mainTotal {
+                padding-right: 10px;
+                padding-left: 0px;
+                @* top: @ViewBag.CompTopOffset;  *@
+            }
+
+            @@media (max-width: 880.98px) {
+                #mainTotal {
+                    padding-right: 10px;
+                    padding-left: 0px;
+                    @* top: @ViewBag.CompTopOffsetMini; *@
+                }
+            }
+
+            #AlignRow {
+                padding-right: 0px;
+                padding-left: 0px;
+                top: @ViewBag.CompTopOffset;
+            }
+
+            @@media (max-width: 880.98px) {
+                #AlignRow {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    top: @ViewBag.CompTopOffsetMiniMid;
+                }
+            }
+
+            @@media (max-width: 620.98px) {
+                #AlignRow {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    top: @ViewBag.CompTopOffsetMini;
+                }
+            }
+
+            #AlignLeft1 {
+                padding-right: 0px;
+                padding-left: 90px;
+            }
+
+            #AlignLeft2 {
+                padding-right: 40px;
+                padding-left: 0px;
+            }
+
+            @@media (max-width: 620.98px) {
+                #AlignLeft1 {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                }
+            }
+
+            @@media (max-width: 620.98px) {
+                #AlignLeft2 {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                }
+            }
+
+            #AlignRight1 {
+                padding-right: 0px;
+                padding-left: 90px;
+            }
+
+            #AlignRight2 {
+                padding-right: 40px;
+                padding-left: 0px;
+            }
+
+            @@media (max-width: 620.98px) {
+                #AlignRight1 {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                }
+            }
+
+            @@media (max-width: 620.98px) {
+                #AlignRight2 {
+                    padding-right: 0px;
+                    padding-left: 0px;
+                }
+            }
+
+            #AlignCenter1 {
+                padding-right: 0px;
+                padding-left: 0px;
+            }
+
+            #AlignCenter2 {
+                padding-right: 30px;
+                padding-left: 0px;
+            }
+
+
+            footer #CompanyLogo img {
+                width: @ViewBag.FooterLogoWidthHeightStr;
+                height: @ViewBag.FooterLogoWidthHeightStr;
+                background: round;
+                background-size: cover;
+            }
+
+            footer #CompanyLogo {
+                width: @ViewBag.FooterLogoWidthHeightStr;
+                height: @ViewBag.FooterLogoWidthHeightStr;
+                margin-top: @ViewBag.FooterTopOffset;
+            }
+
+            #FooterBanner {
+                height: 60px;
+            }
+
+            header .brand-social:before {
+                background: #000000;
+                opacity: 0.2;
+            }
+
+
+            header .sli2 {
+                background: rgb(34 178 76);
+                border: 0px;
+            }
+            /*#FooterRow {
+            transform: translateY(61%);
+        }*/
+            #enqlink {
+                display: none;
+            }
+
+            #er1, #er2 {
+                color: red;
+            }
+            /*  .carousel-control-prev {
+            margin-left: -68px;
+        }
+
+        .carousel-control-next {
+            margin-right: -68px;
+        } */
+
+            #det {
+                background: rgba(0,0,0,0.4);
+                height: 25vh;
+                position: relative;
+                top: 10%;
+            }
+
+            header .head-content {
+            }
+
+            .animator {
+                padding: 10px 10px;
+            }
+
+            .autoModal.modal .modal-body {
+                padding: 0.5rem;
+            }
+
+            header .brand-social:before {
+                top: 40%
+            }
+
+            /* Smartphones ----------- */
+            @@media only screen and (hover: none) and (pointer: coarse) and (min-width: 1920px) {
+                #det {
+                    height: 22vh;
+                }
+
+                .carousel-inner {
+                    margin-top: -200px;
+                }
+            }
+
+            @@media only screen and (hover: none) and (pointer: coarse) and (min-width: 1024px) {
+                #det {
+                    height: 22vh;
+                }
+
+                .carousel-inner {
+                    margin-top: -200px;
+                }
+            }
+
+            @@media only screen and (hover: none) and (pointer: coarse) and (min-width: 768px) {
+                #det {
+                    height: 20vh;
+                }
+
+                .carousel-inner {
+                    margin-top: -200px;
+                }
+            }
+
+            @@media only screen and (hover: none) and (pointer: coarse) and (min-width: 411px) {
+                #det {
+                    height: 20vh;
+                }
+
+                .carousel-inner {
+                    margin-top: -130px;
+                }
+            }
+
+            /* Smartphones ----------- */
+
+            /* desktops----------- */
+
+            @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 1920px) {
+                #det {
+                    height: 20vh;
+                }
+            }
+
+            @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 1366px) {
+                #det {
+                    height: 20vh;
+                }
+            }
+
+            @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 1400px) {
+                #det {
+                    height: 20vh;
+                }
+            }
+
+            @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 1280px) {
+                #det {
+                    height: 20vh;
+                }
+            }
+
+            @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 800px) {
+                #det {
+                    height: 20vh;
+                }
+            }
+
+            /* desktops----------- */
+
+            @@keyframes fadeIn {
+                20% {
+                    opacity: 0;
+                }
+
+                50% {
+                    opacity: 1;
+                }
+
+                60% {
+                    opacity: 0;
+                }
+            }
+
+    </style>
+    @{ if ((ViewBag.Class != "admin"))
+        { @Html.Raw(ViewBag.FB)
+        @Html.Raw(ViewBag.GA)
+    }
+    }
+
+    @if (ViewBag.LogoAlign != 2)
+    {
+        <style>
+    #mainTotal {
+        padding-right: 10px;
+        padding-left: 0px;
+         top: @ViewBag.CompTopOffset;
+            }
+
+    @@media (max-width: 880.98px) {
+        #mainTotal {
+            padding-right: 10px;
+            padding-left: 0px;
+            top: @ViewBag.CompTopOffsetMini;
+        }
+    }
+            @@media (max-width: 620.98px) {
+                header .brand-social:before {
+                    top: -10%;
+                    height: 120px;
+                }
+            }
+
+        </style>
+    }
+
+</head>
+
+@{
+    var LogoHref = Request.Url.AbsoluteUri.ToString().Split(new string[] { "/Offices" }, StringSplitOptions.None)[0];
+}
+<body class="@ViewBag.Class">
+    <div class="container-fluid body-content">
+        <div class="modal fade modal-redirect" id="modalRedirect" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title text-center">
+                            <img class="cmp-image" src="~/ExtLinks/LinkImages/@ViewBag.Favicon" /><br /><span class="cmp">This content is outside the </span><span class="cmp">@pagebuilder.Utils.Common.CompanyName website</span>
+                        </p>
+                        <button type="button" class="close cancel" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <a href="" class="btn btn-primary btn-sm" id="continue" target="_blank">Continue</a>
+                        <button id="cancel" type="button" class="btn btn-default btn-sm cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (ViewBag.Q == 1)
+        {
+
+            if (ViewBag.NewSide > 0)
+            {
+                @RenderPage("SidenavSubHomePage.cshtml")
+                <!-- Subhome QL-->
+            }
+            else
+            {
+                @RenderPage("Sidenav.cshtml")
+                <!-- NOT Subhome QL-->
+            }
+        }
+
+        @{
+            int alignv = 0;
+        }
+        @{
+            var h_just = "";
+            if (((int)ViewBag.SideNavLogoWidth + 5) > ((int)ViewBag.SideNavLogoHeight))
+            {
+                h_just = "";
+            }
+            else
+            {
+                h_just = "h_icons";
+            }
+
+            if (((int)ViewBag.SideNavLogoWidth) == ((int)ViewBag.SideNavLogoHeight))
+            {
+                h_just = "h_icons";
+            }
+        }
+
+        <!-- Header -->
+        <header class="page-item-header bg-img">
+
+            <nav class="navbar navbar-light navbar-expand-md" style="background: rgba(0,0,0,0.2);max-height: 120px;position: relative;left: 0;width: 100%;">
+                <div class="container-fluid " id="head_ie">
+                    <!-- update for internet explorer -->
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <a class="btn btn-primary btn-toggle no-transition navbar_btn" role="button" id="quickLinksButton" style="@(ViewBag.Q == 0 ? "visibility: hidden" : ""); padding:6px 6px 9px 6px;width:auto" data-toggle="expanded" data-target=".sidebar">
+                                <i class="fa fa-bars" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    @if (ViewBag.Chk == 0 || ViewBag.Chk == null)
+                    {
+                        <a id="new_logo" class="navbar-brand" href="~/" data-alistair="@(LogoHref)" @(ViewBag.LogoIcon == null ? "data-target=.image-bg" : "")>
+                            <img id="company-logo" class="img-fluid company-logo" src="@ViewBag.NewCompanyLogo" alt="@ViewBag.LogoTitle" />
+                        </a>
+                    }
+                    else
+                    {
+                        <a id="new_logo" class="navbar-brand" href="~/SubHome/Index/@(ViewBag.Chk)" data-alistair="@(LogoHref)" @(ViewBag.LogoIcon == null ? "data-target=.image-bg" : "")>
+                            <img id="company-logo" class="img-fluid company-logo" src="@ViewBag.NewCompanyLogo" alt="@ViewBag.LogoTitle" />
+                        </a>
+                    }
+
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <a class="btn btn-primary btn-toggle no-transition navbar_btn" role="button" id="searchForPageButton" style="">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container-fluid" style="top: 25px;position: relative; z-index:9">
+                <div class="row">
+                    <div class="col text-center" style="padding: 0px;">
+                        <!-- Header icons here-->
+                        @foreach (var IconItem in ViewBag.HeaderIcons)
+                        {
+                            var IconId = IconItem.Id.ToString();
+
+                            foreach (var Icon in ViewBag.ExLinkItems)
+                            {
+                                if (Icon.Id == IconItem.ExtlinkId)
+                                {
+                                    int LinkExternal = 0;
+                                    var LinkId = Icon.Title.Replace(" ", "");
+                                    var ClassName = LinkId.ToLower();
+
+                                    if (Icon.IsExternal != null && Icon.IsExternal == 1)
+                                    {
+                                        LinkExternal = Icon.IsExternal;
+                                    }
+
+                                    if (Icon.UrlLink != null)
+                                    {
+                                        <!-- <a id="@LinkId" class="@(Icon.Icon == null ? "bg-img" : "sli sli-" + ClassName)" href="@(Icon.UrlLink != null ? Icon.UrlLink : "")" @(Icon.Icon == null ? "data-target=.image-bg" : "") data-external="@LinkExternal" alt="@Icon.Title">  -->
+
+                                        if (Icon.Icon != null)
+                                        {
+                                            <a id="@LinkId" class="@(Icon.Icon == null ? "bg-img" : "sli")" style="background-color:@(Icon.Color != null? Icon.Color:"#999"); border-color: @(Icon.Color != null? Icon.Color:"#999");" onMouseOver="this.style.color = '@(Icon.Color != null? Icon.Color:"#000")'; this.style.backgroundColor = '@(Icon.Color != null? "#FFF":"#999")'; this.style.borderColor='@(Icon.Color != null? Icon.Color:"#999")'" onMouseOut="this.style.color='#FFF'; this.style.backgroundColor='@(Icon.Color != null? Icon.Color:"#999")'" href="@(Icon.UrlLink != null ? Icon.UrlLink : "")" @(Icon.Icon == null ? "data-target=.image-bg" : "") data-external="@LinkExternal" alt="@Icon.Title">
+                                                <i class="fa @Icon.Icon"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a id="@LinkId" class="sli3" href="~/" @(Icon.Icon == null ? "data-target=.image-bg" : "") data-external="@LinkExternal" alt="@Icon.Title">
+                                                <img class="image-bg" src="~/ExtLinks/LinkImages/@Icon.Id" style="width:100%" />
+                                            </a>
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="page-header page-header-title">
+                <h1>
+                    @Html.DisplayFor(model => model.Title)
+                </h1>
+            </div>
+            <img id="bgground" class="image-bg" src="~/Pages/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" width="100%" />
+
+            <!-- End Banner Image -->
+
+        </header>
+
+        <!-- End Header -->
+        <div class="mainbody">
+            @RenderBody()
+        </div>
+
+        <!-- Footer -->
+        @if (ViewBag.Footer == true)
+        {
+            var li = 0;
+            var ci = 0;
+
+            <footer id="FooterBanner" style="background:@ViewBag.ExLinkBanner">
+                <div id="FooterRow" class="row align-items-center">
+                    <div class="col text-center">
+                        <a href="~/">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="col text-center">
+                        <a class="" data-toggle="modal" data-target="#ModalLocation" aria-expanded="true" aria-controls="modallocation">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </a>
+                        <div class="modal fade modaBlocks modal-footer-blocks" id="ModalLocation" tabindex="-1" role="dialog" aria-labelledby="ModalLocation" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Locations</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="modalLocationTabs" class="accordion">
+                                            <div class="card">
+                                                @foreach (var locgroup in ViewBag.Location)
+                                                {
+                                                    var locItemId = locgroup.Id.ToString();
+                                                    li++;
+
+                                                    foreach (var locItem in ViewData[locItemId])
+                                                    {
+                                                        <div id="LocationTab@(locItem.Id)" class="card-header">
+                                                            <h4 class="btn-cardbody" data-toggle="collapse" data-target="#FooterLocation@(locItem.Id)" data-body="modalLocationTabs" aria-expanded="@(li == 1 ? "true" : "false")" aria-controls="collapse@(locItem.Id)">
+                                                                @locItem.Title
+                                                            </h4>
+                                                        </div>
+                                                        <div id="FooterLocation@(locItem.Id)" class="collapse @(li == 1 ? "show" : "") collapse-body" data-header="#LocationTab@(locItem.Id)" data-parent="#modalLocationTabs" aria-expanded="@(li == 1 ? "true" : "false")">
+                                                            <div class="card-body">
+                                                                @Html.Raw(System.Web.HttpUtility.HtmlDecode(locItem.Google))
+
+                                                                @if (locItem.Hours != null)
+                                                                {
+                                                                    List<string> hourmon = new List<string>();
+                                                                    List<string> hourtue = new List<string>();
+                                                                    List<string> hourwed = new List<string>();
+                                                                    List<string> hourthu = new List<string>();
+                                                                    List<string> hourfri = new List<string>();
+                                                                    List<string> hoursat = new List<string>();
+                                                                    List<string> hoursun = new List<string>();
+                                                                    string h = locItem.Hours.ToString();
+                                                                    string[] hv = h.Split(',');
+                                                                    for (int i = 0; i < hv.Length; i++)
+                                                                    {
+                                                                        if (i == 0 || i == 1 || i == 2)
+                                                                        {
+                                                                            hourmon.Add(hv[i].Trim());
+                                                                        }
+                                                                        if (i == 3 || i == 4 || i == 5)
+                                                                        {
+                                                                            hourtue.Add(hv[i].Trim());
+                                                                        }
+                                                                        if (i == 6 || i == 7 || i == 8)
+                                                                        {
+                                                                            hourwed.Add(hv[i].Trim());
+                                                                        }
+                                                                        if (i == 9 || i == 10 || i == 11)
+                                                                        {
+                                                                            hourthu.Add(hv[i].Trim());
+                                                                        }
+                                                                        if (i == 12 || i == 13 || i == 14)
+                                                                        {
+                                                                            hourfri.Add(hv[i].Trim());
+                                                                        }
+                                                                        if (i == 15 || i == 16 || i == 17)
+                                                                        {
+                                                                            hoursat.Add(hv[i].Trim());
+                                                                        }
+                                                                        if (i == 18 || i == 19 || i == 20)
+                                                                        {
+                                                                            hoursun.Add(hv[i].Trim());
+                                                                        }
+                                                                    }
+                                                                    <ul>
+                                                                        <li class="row hg hg-item justify-content-center">
+                                                                            <p>
+                                                                                @foreach (var item in hourmon)
+                                                                                {
+                                                                                    <span class="hg-col">
+                                                                                        @item
+                                                                                    </span>
+                                                                                }
+                                                                            </p>
+
+                                                                        </li>
+                                                                        @if (hourtue != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in hourtue)
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            @item
+                                                                                        </span>
+                                                                                    }
+                                                                                </p>
+
+                                                                            </li>
+                                                                        }
+                                                                        @if (hourwed != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in hourwed)
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            @item
+                                                                                        </span>
+                                                                                    }
+                                                                                </p>
+
+                                                                            </li>
+                                                                        }
+                                                                        @if (hourthu != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in hourthu)
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            @item
+                                                                                        </span>
+                                                                                    }
+                                                                                </p>
+
+                                                                            </li>
+                                                                        }
+                                                                        @if (hourfri != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in hourfri)
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            @item
+                                                                                        </span>
+                                                                                    }
+                                                                                </p>
+
+                                                                            </li>
+                                                                        }
+                                                                        @if (hoursat != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in hoursat)
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            @item
+                                                                                        </span>
+                                                                                    }
+                                                                                </p>
+                                                                            </li>
+                                                                        }
+                                                                        @if (hoursun != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in hoursun)
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            @item
+                                                                                        </span>
+                                                                                    }
+                                                                                </p>
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                }
+
+                                                                <p class="notes text-center">
+                                                                    @Html.Raw(System.Web.HttpUtility.HtmlDecode(locItem.Maintext))
+                                                                </p>
+
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center" style="width:100%; height:60px">
+                        <a id="CompanyLogo" @(ViewBag.fLogoIcon == null ? "data-target=.image-bg" : "")>
+                            <img id="company-footer-logo" class="image-bg" src="@ViewBag.NewFooterLogo" alt="@ViewBag.fLogoTitle" />
+                        </a>
+                    </div>
+                    <div class="col text-center">
+                        <a class="" data-toggle="modal" data-target="#ModalContact" aria-expanded="true" aria-controls="modalcontact">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                        </a>
+                        <div class="autoModal modal fade modaBlocks modal-footer-blocks 3-blocks" id="ModalContact" tabindex="-1" role="dialog" aria-labelledby="ModalContact" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Contacts</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="modalContactTabs" class="accordion">
+                                            <div class="card">
+                                                @foreach (var congroup in ViewBag.Contact)
+                                                {
+                                                    var conItemId = congroup.Id.ToString();
+                                                    ci++;
+
+                                                    foreach (var conItem in ViewData[conItemId])
+                                                    {
+                                                        <div id="ContactTab@(conItem.Id)" class="card-header">
+                                                            <h4 class="btn-cardbody" data-toggle="collapse" data-target="#FooterContact@(conItem.Id)" data-body="modalContactTabs" aria-expanded="@(ci == 1 ? "true" : "false")" aria-controls="collapse@(conItem.Id)">
+                                                                @conItem.Title
+                                                            </h4>
+                                                        </div>
+                                                        <div id="FooterContact@(conItem.Id)" class="collapse @(ci == 1 ? "show" : "") collapse-body" data-header="#ContactTab@(conItem.Id)" data-parent="#modalContactTabs" aria-expanded="@(ci == 1 ? "true" : "false")">
+                                                            <div class="card-body">
+                                                                <div class="contact-phone">
+                                                                    @if (conItem.Hours != null)
+                                                                    {
+                                                                        List<string> phoneprimary = new List<string>();
+                                                                        List<string> phonesecondary = new List<string>();
+                                                                        List<string> phoneThird = new List<string>();
+                                                                        List<string> phoneFourth = new List<string>();
+                                                                        string h = conItem.Phone.ToString();
+                                                                        string[] hv = h.Split(',');
+                                                                        for (int i = 0; i < hv.Length; i++)
+                                                                        {
+                                                                            if (i == 0 || i == 1)
+                                                                            {
+                                                                                phoneprimary.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 2 || i == 3)
+                                                                            {
+                                                                                phonesecondary.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 4 || i == 5)
+                                                                            {
+                                                                                phoneThird.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 6 || i == 7)
+                                                                            {
+                                                                                phoneFourth.Add(hv[i].Trim());
+                                                                            }
+                                                                        }
+                                                                    <ul>
+                                                                        <li class="row hg hg-item justify-content-center">
+                                                                            <p>
+                                                                                @foreach (var item in phoneprimary)
+                                                                                {
+                                                                                    if (item != "Phone")
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            &nbsp;
+                                                                                            <a href="tel:@item" onMouseOver="this.style.color='DodgerBlue'" onMouseOut="this.style.color='Black'"><u>@item </u></a>
+                                                                                        </span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            @item
+                                                                                        </span>
+                                                                                    }
+                                                                                }
+                                                                            </p>
+
+                                                                        </li>
+                                                                        @if (phonesecondary != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in phonesecondary)
+                                                                                    {
+                                                                                        if (item != "Fax")
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                &nbsp;
+                                                                                                <a href="tel:@item" onMouseOver="this.style.color='DodgerBlue'" onMouseOut="this.style.color='Black'"><u>@item </u></a>
+                                                                                            </span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    }
+                                                                                </p>
+
+                                                                            </li>
+                                                                        }
+                                                                        @if (phoneThird != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in phoneThird)
+                                                                                    {
+                                                                                        if (item != "Fax")
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                &nbsp;
+                                                                                                <a href="tel:@item" onMouseOver="this.style.color='DodgerBlue'" onMouseOut="this.style.color='Black'"><u>@item </u></a>
+                                                                                            </span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    }
+                                                                                </p>
+
+                                                                            </li>
+                                                                        }
+                                                                        @if (phoneFourth != null)
+                                                                        {
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in phoneFourth)
+                                                                                    {
+                                                                                        if (item != "Fax")
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                &nbsp;
+                                                                                                <a href="tel:@item" onMouseOver="this.style.color='DodgerBlue'" onMouseOut="this.style.color='Black'"><u>@item </u></a>
+                                                                                            </span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    }
+                                                                                </p>
+
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                    }
+                                                                </div>
+                                                                <div class="contact-hours">
+                                                                    <h4 class="text-center">HOURS</h4>
+                                                                    @if (conItem.Hours != null)
+                                                                    {
+                                                                        List<string> hourmon = new List<string>();
+                                                                        List<string> hourtue = new List<string>();
+                                                                        List<string> hourwed = new List<string>();
+                                                                        List<string> hourthu = new List<string>();
+                                                                        List<string> hourfri = new List<string>();
+                                                                        List<string> hoursat = new List<string>();
+                                                                        List<string> hoursun = new List<string>();
+                                                                        string h = conItem.Hours.ToString();
+                                                                        string[] hv = h.Split(',');
+                                                                        for (int i = 0; i < hv.Length; i++)
+                                                                        {
+                                                                            if (i == 0 || i == 1 || i == 2)
+                                                                            {
+                                                                                hourmon.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 3 || i == 4 || i == 5)
+                                                                            {
+                                                                                hourtue.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 6 || i == 7 || i == 8)
+                                                                            {
+                                                                                hourwed.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 9 || i == 10 || i == 11)
+                                                                            {
+                                                                                hourthu.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 12 || i == 13 || i == 14)
+                                                                            {
+                                                                                hourfri.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 15 || i == 16 || i == 17)
+                                                                            {
+                                                                                hoursat.Add(hv[i].Trim());
+                                                                            }
+                                                                            if (i == 18 || i == 19 || i == 20)
+                                                                            {
+                                                                                hoursun.Add(hv[i].Trim());
+                                                                            }
+                                                                        }
+                                                                        <ul>
+                                                                            <li class="row hg hg-item justify-content-center">
+                                                                                <p>
+                                                                                    @foreach (var item in hourmon)
+                                                                                    {
+                                                                                        <span class="hg-col">
+                                                                                            @item
+                                                                                        </span>
+                                                                                    }
+                                                                                </p>
+
+                                                                            </li>
+                                                                            @if (hourtue != null)
+                                                                            {
+                                                                                <li class="row hg hg-item justify-content-center">
+                                                                                    <p>
+                                                                                        @foreach (var item in hourtue)
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    </p>
+
+                                                                                </li>
+                                                                            }
+                                                                            @if (hourwed != null)
+                                                                            {
+                                                                                <li class="row hg hg-item justify-content-center">
+                                                                                    <p>
+                                                                                        @foreach (var item in hourwed)
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    </p>
+
+                                                                                </li>
+                                                                            }
+                                                                            @if (hourthu != null)
+                                                                            {
+                                                                                <li class="row hg hg-item justify-content-center">
+                                                                                    <p>
+                                                                                        @foreach (var item in hourthu)
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    </p>
+
+                                                                                </li>
+                                                                            }
+                                                                            @if (hourfri != null)
+                                                                            {
+                                                                                <li class="row hg hg-item justify-content-center">
+                                                                                    <p>
+                                                                                        @foreach (var item in hourfri)
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    </p>
+
+                                                                                </li>
+                                                                            }
+                                                                            @if (hoursat != null)
+                                                                            {
+                                                                                <li class="row hg hg-item justify-content-center">
+                                                                                    <p>
+                                                                                        @foreach (var item in hoursat)
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    </p>
+
+                                                                                </li>
+                                                                            }
+                                                                            @if (hoursun != null)
+                                                                            {
+                                                                                <li class="row hg hg-item justify-content-center">
+                                                                                    <p>
+                                                                                        @foreach (var item in hoursun)
+                                                                                        {
+                                                                                            <span class="hg-col">
+                                                                                                @item
+                                                                                            </span>
+                                                                                        }
+                                                                                    </p>
+                                                                                </li>
+                                                                            }
+                                                                        </ul>
+                                                                    }
+                                                                </div>
+                                                                <hr/>
+                                                                <div class="contact-notes">
+                                                                    @if (conItem.Maintext != null)
+                                                                    {
+                                                                        @Html.Raw(Html.Encode(conItem.Maintext).Replace("\n", "<br />"))
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <a class="" data-toggle="modal" data-target="#ModalEmail" aria-expanded="true" aria-controls="modalemail">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </a>
+                        <div class="autoModal modal fade modaBlocks modal-footer-blocks" id="ModalEmail" tabindex="-1" role="dialog" aria-labelledby="ModalEmail" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">
+                                            @foreach (var email in ViewBag.ModalEmail)
+                                            {
+                                                @email.Title;
+                                            }
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="dept-emails">
+                                            @if (ViewBag.Email1 != null)
+                                            {
+                                                var e1 = 0;
+                                                int eval = 0;
+                                                <div class="row">
+                                                    @foreach (var emailitem in ViewBag.Email1)
+                                                    {
+                                                        e1++;
+
+                                                        if (e1 == 1)
+                                                        {
+                                                            eval = Convert.ToInt32(emailitem);
+                                                        }
+
+                                                        if (eval == 1)
+                                                        {
+                                                            if (e1 == 2)
+                                                            {
+                                                                <div class="col-md-4">
+                                                                    <p>@(emailitem)</p>
+                                                                </div>
+                                                            }
+                                                            else if (e1 == 3)
+                                                            {
+                                                                <div class="col-md-8">
+                                                                    <p><a href="mailto:@(emailitem)">@(emailitem)</a></p>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+                                            @if (ViewBag.Email2 != null)
+                                            {
+                                                var e2 = 0;
+                                                int eval = 0;
+                                                <div class="row">
+                                                    @foreach (var emailitem in ViewBag.Email2)
+                                                    {
+                                                        e2++;
+
+                                                        if (e2 == 1)
+                                                        {
+                                                            eval = Convert.ToInt32(emailitem);
+                                                        }
+
+                                                        if (eval == 1)
+                                                        {
+                                                            if (e2 == 2)
+                                                            {
+                                                                <div class="col-md-4">
+                                                                    <p>@(emailitem)</p>
+                                                                </div>
+                                                            }
+                                                            else if (e2 == 3)
+                                                            {
+                                                                <div class="col-md-8">
+                                                                    <p><a href="mailto:@(emailitem)">@(emailitem)</a></p>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+                                            @if (ViewBag.Email3 != null)
+                                            {
+                                                var e3 = 0;
+                                                int eval = 0;
+                                                <div class="row">
+                                                    @foreach (var emailitem in ViewBag.Email3)
+                                                    {
+                                                        e3++;
+
+                                                        if (e3 == 1)
+                                                        {
+                                                            eval = Convert.ToInt32(emailitem);
+                                                        }
+
+                                                        if (eval == 1)
+                                                        {
+                                                            if (e3 == 2)
+                                                            {
+                                                                <div class="col-md-4">
+                                                                    <p>@(emailitem)</p>
+                                                                </div>
+                                                            }
+                                                            else if (e3 == 3)
+                                                            {
+                                                                <div class="col-md-8">
+                                                                    <p><a href="mailto:@(emailitem)">@(emailitem)</a></p>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+                                            @if (ViewBag.Email4 != null)
+                                            {
+                                                var e4 = 0;
+                                                int eval = 0;
+                                                <div class="row">
+                                                    @foreach (var emailitem in ViewBag.Email4)
+                                                    {
+                                                        e4++;
+
+                                                        if (e4 == 1)
+                                                        {
+                                                            eval = Convert.ToInt32(emailitem);
+                                                        }
+
+                                                        if (eval == 1)
+                                                        {
+                                                            if (e4 == 2)
+                                                            {
+                                                                <div class="col-md-4">
+                                                                    <p>@(emailitem)</p>
+                                                                </div>
+                                                            }
+                                                            else if (e4 == 3)
+                                                            {
+                                                                <div class="col-md-8">
+                                                                    <p><a href="mailto:@(emailitem)">@(emailitem)</a></p>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+                                            @if (ViewBag.Email5 != null)
+                                            {
+                                                var e5 = 0;
+                                                int eval = 0;
+                                                <div class="row">
+                                                    @foreach (var emailitem in ViewBag.Email5)
+                                                    {
+                                                        e5++;
+
+                                                        if (e5 == 1)
+                                                        {
+                                                            eval = Convert.ToInt32(emailitem);
+                                                        }
+
+                                                        if (eval == 1)
+                                                        {
+                                                            if (e5 == 2)
+                                                            {
+                                                                <div class="col-md-4">
+                                                                    <p>@(emailitem)</p>
+                                                                </div>
+                                                            }
+                                                            else if (e5 == 3)
+                                                            {
+                                                                <div class="col-md-8">
+                                                                    <p><a href="mailto:@(emailitem)">@(emailitem)</a></p>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+                                            @if (ViewBag.Email6 != null)
+                                            {
+                                                var e6 = 0;
+                                                int eval = 0;
+                                                <div class="row">
+                                                    @foreach (var emailitem in ViewBag.Email6)
+                                                    {
+                                                        e6++;
+
+
+
+                                                        if (e6 == 1)
+                                                        {
+                                                            eval = Convert.ToInt32(emailitem);
+                                                        }
+
+                                                        if (eval == 1)
+                                                        {
+                                                            if (e6 == 2)
+                                                            {
+                                                                <div class="col-md-4">
+                                                                    <p>@(emailitem)</p>
+                                                                </div>
+                                                            }
+                                                            else if (e6 == 3)
+                                                            {
+                                                                <div class="col-md-8">
+                                                                    <p><a href="mailto:@(emailitem)">@(emailitem)</a></p>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+
+
+                                        @if (ViewBag.Sysemail != null)
+                                        {
+                                            var se = 0;
+                                            var seval = "";
+                                            var setitle = "";
+
+                                            foreach (var sysemail in ViewBag.Sysemail)
+                                            {
+                                                se++;
+
+
+                                                if (se == 1)
+                                                {
+                                                    seval = sysemail;
+                                                }
+
+                                                if (se == 2)
+                                                {
+                                                    setitle = sysemail;
+                                                }
+
+                                                if (seval == "sys_1")
+                                                {
+                                                    if (se == 3)
+                                                    {
+                                                        <hr />
+                                                        <p class="lead text-center ">
+                                                            <a class="sys-email" href="@(sysemail)">@(setitle)</a>
+                                                        </p>
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        }
+
+        <!-- End Footer -->
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+
+    <script>
+    var ROOT = '@Url.Content("~")';
+	$("ul.bcrumbs li:first a").attr("href",ROOT);
+    </script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!--
+         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  -->
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-customselect-1.9.1.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+    @Scripts.Render("~/bundles/modernizr")
+    <!--    <script>CKEDITOR.replace('textEdit');</script>-->
+    <!--<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>-->
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>-->
+    <script type='text/javascript' src="~/Scripts/simple-iconpicker.min.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+
+    <script src="~/Scripts/typeahead.bundle.js"></script>
+    <script src="~/Scripts/sccweb/views/pages/detail-page.js"></script>
+    <script src="~/Scripts/sccweb/views/pages/edit-page.js"></script>
+    <script src="~/Scripts/sccweb/functionality/search-for-page.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var imgsrc = $('#bgground').attr('src');
+            $('header').attr('style', 'background: url(' + imgsrc + ') center / cover no-repeat;'); // center / cover no-repeat
+        });
+
+        $(document).ready(function () {
+            if (Object.hasOwnProperty.call(window, "ActiveXObject") && !window.ActiveXObject) {
+                // is IE11
+
+                var img = document.getElementById('company-logo');
+                //or however you get a handle to the IMG
+                var logowidth = img.clientWidth;
+                var logoheight = img.clientHeight;
+
+                if (logoheight == logowidth) {
+                    $('#head_ie').addClass('h_icons');
+                }
+                if (logowidth > logoheight) {
+                    $('#head_ie').addClass('hcons');  //$('#head_ie').addClass('hcons');   $('#head_ie').addClass('h_icons');
+                }
+
+            }
+        });
+    </script>
+
+    @{if ((ViewBag.Class == "home"))
+        {
+            <script>
+                var slh = $("#slideshow").height() + 20;
+                //console.log("Height of slh: " + slh);
+                // get the height content                 //
+
+                const ch2 = new Array()
+
+                $('.animator').each(function (i, obj) {
+                    //   var sl = $(this).height();
+                    var sl = $(this).innerHeight();
+                    ch2.push(sl);
+                });
+
+                var slh2 = Math.max.apply(Math, ch2);
+                // get the height value
+
+                $("#det").css("height", slh2); // ok
+
+
+                let eltop = document.getElementById("det");
+                let top3 = eltop.getBoundingClientRect().top + eltop.ownerDocument.defaultView.pageYOffset;
+
+                //var mtop = $("#det").innerHeight() * -1;
+                var mtop = ($("#det").innerHeight() * -1) - 10;
+
+                $('#slideshow').css("margin-top", mtop);
+
+                // get width of the slidehow
+
+                var slw = $("#slideshow").width();
+                var nlw = (slw / 3);
+                // arrows
+
+                var mv = slh2 / 2;
+
+                $('.carousel-control-next').css("margin-right", nlw);
+                $('.carousel-control-prev').css("margin-left", nlw);
+
+                $('.carousel-control-next').css("top", slh2);
+                $('.carousel-control-prev').css("top", slh2);
+
+
+            </script>
+        }
+    }
+
+    <script>
+     //   $(document).ready(CompLogoMargin);
+     //   $(window).resize(CompLogoMargin);
+        function CompLogoMargin() {
+            var win = $(this);
+            var data = ((parseInt($("#mainTotal").width()) - @ViewBag.CompLogoWidth)/2);
+            var data2 = parseInt($("#mainTotal").width()) - 60 - data - (((parseInt($("#mainTotal").width())-80)/3)*2);
+
+            if (win.width() >= 864) {
+               if (@ViewBag.CompLogoWidth > ((parseInt($("#mainTotal").width() + 80) / 3))) {
+                        $('.offset-md-4').css({
+                             'margin-left': "" + data + "px",
+                             'margin-right': "" + data2 + "px"
+                        })
+
+                        $('#AlignCenter2').css({
+                            'padding-right': "30px",
+                            'padding-left': "0px"
+                        })
+               }
+               else
+               {
+                        $('.offset-md-4').css({
+                             'margin-left': "33.3333%",
+                             'margin-right': "0px"
+                        })
+
+                        $('#AlignCenter2').css({
+                            'padding-right': "30px",
+                            'padding-left': "0px"
+                        })
+               }
+            }
+            else
+            {
+                    $('.offset-md-4').css({
+                        'margin-left': "0px",
+                        'margin-right': "0px"
+                    })
+
+                    $('#AlignCenter2').css({
+                        'padding-right': "0px",
+                        'padding-left': "0px"
+                    })
+             }
+        }
+
+        var whichInput = 0;
+
+        $(document).ready(function () {
+            //FORCE FIXING WHITE FOOTER
+            //$('footer').css('color', '#fff');
+            //FORCE FIXING WHITE FOOTER
+
+            $('.form-control-icon').iconpicker('.form-control-icon');
+
+            $('.pmg').sortable({
+                connectWith: '.pmg',
+                placeholder: 'card2',
+
+                //  handle: '.card',
+                update: function (e, ui) {
+
+                    var element = $(this);
+                    var id_string = element.attr("id");
+                    //console.log(id_string);
+
+                    var i = 0;
+                    $('#' + id_string + '> li').each(function () {
+                        //console.log("li: " + $(this).attr("id"));
+                        var li_string = $(this).attr("id");
+
+                        var del_id = li_string.split("-");
+                        var parent_id = id_string.split("-");
+
+                        var cid = del_id[1];
+                        var pid = parent_id[1];
+
+                        var info2 = 'id=' + cid + '&sortid=' + i + '&pd=' + pid;
+
+                        var url_sub = ROOT + 'Menugroups/Sort';
+                        //console.log(url_sub);
+                        $.ajax({
+                            type: "GET",
+                            url: url_sub,
+                            data: info2,
+                            success: function () {
+                            }
+                        });
+                        i++;
+                    });
+                }
+            });
+            $('.pmg').disableSelection();
+        });
+
+        // Sortable issue solved by sir alistair --> CKEditor missing contents -> fix section
+
+        $(document).ready(function () {
+            $('.pmgE').sortable({
+                connectWith: '.pmgE',
+                placeholder: 'card2',
+                update: function (e, ui) {
+                    for (name in CKEDITOR.instances) {
+                        CKEDITOR.instances[name].destroy(true);
+                    }
+                    ckload();
+                },
+                start: function () {
+                    //for (name in CKEDITOR.instances) {
+                    //    CKEDITOR.instances[name].destroy(true);
+                    //}
+                },
+                stop: function (e, ui) {
+                    for (name in CKEDITOR.instances) {
+                        CKEDITOR.instances[name].destroy(true);
+                    }
+                    ckload();
+                }
+            });
+            $('.pmgE').disableSelection();
+            ckload();
+
+        });
+
+        function ckload() {
+            $('textarea[name="subcontent"]').each(function () {
+                var ck_Id = $(this).attr("id");
+                //console.log(ck_Id);
+                CKEDITOR.replace(ck_Id);
+            });
+        }
+
+    </script>
+
+    <script>
+       $(document).ready(function () {
+
+        var $img = $("#CompanyLogo").children("img").clone();
+        $("#slogo").append($img);
+
+        $('.CompanyLogo22').attr('href', '@LogoHref');
+
+        $.fn.modal.Constructor.prototype._enforceFocus = function _enforceFocus() {
+            var _this4 = this;
+                $(document).on(Event.FOCUSIN, function (event) {
+                    if (
+                        document !== event.target
+                        && _this4._element !== event.target
+                        && $(_this4._element).has(event.target).length === 0
+                        && !$(event.target.parentNode).hasClass('cke_dialog_ui_input_select')
+                        && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_textarea')
+                        && !$(event.target.parentNode).hasClass('cke_dialog_ui_input_text')
+                    ) {
+                        _this4._element.focus();
+                    }
+                });
+            };
+        });
+    </script>
+
+    <!-- End Menugroups Script-->
+    <!-- Chat Section-->
+    <!-- Quick Link Section-->
+    <script>
+        $('body').on('click', '#eqlink_1', function () {
+
+            var ele = $(this).attr('id');
+            var idx = ele.split('_');
+
+            if ($(this).hasClass("set") == false) {
+                $(this).addClass("set");
+                $('#enqlink').show(); // feature setting
+
+                //console.log("1");
+
+                $('#sortable-1').hide();
+                $('#eqtoggle_' + idx[1]).hide();
+                $('.qblink').hide();
+            } else {
+                $(this).removeClass("set");
+                $('#enqlink').hide();
+                //console.log("0");
+                $('#sortable-1').show();
+                $('#eqtoggle_' + idx[1]).show();
+                $('.qblink').show();
+            }
+        });
+
+        //homepage tiles meta keywords
+        $('body').on('click', '.tilecheck', function () {
+            var ele = $(this).attr('id');
+            var idx = ele.split('_');
+
+            if ($(this).hasClass("set") == false) {
+                $(this).addClass("set");
+                $('#enqtiles').show(); // feature setting
+
+                //console.log("1");
+
+                $('#sortable-' + idx[1]).hide();
+                $('#eqtoggle_' + idx[1]).hide();
+                $('.btnhp').hide();
+
+            } else {
+                $(this).removeClass("set");
+                $('#enqtiles').hide();
+                //console.log("0");
+                $('#sortable-' + idx[1]).show();
+                $('#eqtoggle_' + idx[1]).show();
+                $('.btnhp').show();
+            }
+        });
+
+        $('body').on('change', '#en1', function () {
+            var data ="id=" +  $(this).val();
+            var url = '@Url.Action("Qlink")';
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: data,
+                success: function (data) {
+
+                }
+             });
+        });
+
+         $('body').on('change', '#en2', function () {
+            var data = "id=" + $(this).val();
+            var url = '@Url.Action("Qlink")';
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: data,
+                success: function (data) {
+
+                }
+             });
+         });
+
+        $('body').on('click', 'a[data-external="1"]', function () {
+            var element = $(this);
+            var wlocation = $(this).attr('href');
+            var meid = $(this).data("pdfid")
+            e.preventDefault();
+
+            $('#modalRedirect').each(function () {
+                var element2 = $(this);
+                $(this).fadeIn("fast");
+                $(this).toggleClass('show');
+                $(this).attr('aria-hidden', false);
+                $(this).attr('aria-modal', true);
+
+                if (element.hasClass('pdf')) {
+                    var data = "id=" + meid;
+                    var url = '@Url.Action("GetPdfLink")';
+
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        data: data,
+                        success: function (data2) {
+                            var extlink = data2;
+                            //console.log(extlink);
+                            element2.find('#continue').attr('href', extlink);
+                        }
+                    });
+                } else {
+                    element2.find('#continue').attr('href', wlocation);
+                }
+            });
+        });
+
+
+
+        $('a[data-external="1"]').click(function (e) {
+        var element = $(this);
+        var wlocation = $(this).attr('href');
+        var meid = $(this).data("pdfid")
+        e.preventDefault();
+
+            $('#modalRedirect').each(function () {
+                var element2 = $(this);
+                $(this).fadeIn("fast");
+                $(this).toggleClass('show');
+                $(this).attr('aria-hidden', false);
+                $(this).attr('aria-modal', true);
+
+                if (element.hasClass('pdf')) {
+                    var data = "id=" + meid;
+                    var url = '@Url.Action("GetPdfLink")';
+
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        data: data,
+                        success: function (data2) {
+                            var extlink = data2;
+                            //console.log(extlink);
+                            element2.find('#continue').attr('href', extlink);
+                        }
+                    });
+                } else {
+                    element2.find('#continue').attr('href', wlocation);
+                }
+            });
+    })
+
+
+        $('.form-page-edit').submit(function (e) {
+            var checker = 0;
+
+            $('.acc-title').each(function (e) {
+                if ($(this).val() == null) {
+                    checker++;
+                }
+            });
+            if (checker > 0) {
+                alert('An empty Title was detected, remove this section if not needed');
+                return false;
+            }
+        });
+
+    </script>
+
+    <!-- Quick Link Section-->
+    <div class="modal fade modal-redirect" id="modalpdf" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#pdfdiv').on('click', function (e) {
+
+            $('#pdfdiv2').toggle();
+        });
+
+        function copyToClipboard(elementId) {
+
+            // Create a "hidden" input
+            var aux = document.createElement("input");
+
+            // Assign it the value of the specified element
+            aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+
+            // Append it to the body
+            document.body.appendChild(aux);
+
+            // Highlight its content
+            aux.select();
+
+            // Copy the highlighted text
+            document.execCommand("copy");
+
+            // Remove it from the body
+            document.body.removeChild(aux);
+
+        }
+
+        //-----------  home page animation trial js
+        $('#rem1').change(function () {
+            var value = $(this).val();
+            var url = ROOT + 'Menugroups/UpSlide';
+
+           // alert(value);
+
+           //   url = "@Url.Action("Update")";
+            //console.log(url);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data:"a=" + value,
+                success: function (data) {
+                    alert("Saved")
+                },
+                error: function () {
+                    alert("There is some problem in the service!")
+                }
+            });
+
+        });
+
+          $('#rem2').change(function () {
+            var value = $(this).val();
+            var url = ROOT + 'Menugroups/UpSlide';
+
+           // alert(value);
+
+           //   url = "@Url.Action("Update")";
+            //console.log(url);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data:"a=" + value,
+                success: function (data) {
+                    alert("Saved")
+                },
+                error: function () {
+                    alert("There is some problem in the service!")
+                }
+            });
+        });
+
+
+
+    </script>
+
+    <script>
+
+        //  $(document).ready(searchloc);
+        // $(window).resize(searchloc);
+
+        function searchloc() {
+
+            var element = document.querySelector("header .brand-social");
+            // CSS styles of the "::after" pseudo-element
+            var style_rules = window.getComputedStyle(element, "::before");
+
+            var top_val = parseInt(style_rules.top);
+            var h_val = parseInt(style_rules.height);
+
+            var scr = $(window).width();
+
+            var qltop = $("#quickLinksButton").offset().top;
+            var qleft = $("#quickLinksButton").offset().left;
+            var swidth = $("#quickLinksButton").outerWidth();
+
+            $("#searchForPageButton").offset({ top: qltop });
+
+            $("#searchForPageButton").offset({ left: scr - qleft - swidth - 5 });
+
+
+        }
+    </script>
+
+    @if (ViewBag.LogoAlign != 2)
+    {
+        <script>
+            $(document).ready(reclogo);
+            $(window).resize(reclogo);
+
+            function reclogo() {
+
+                var scr = $(window).width();
+
+                if (scr < 621) {   //col-sm-4   text-sm-left  "AlignLeft1   -- col-sm-8 text-sm-right   #AlignLeft2
+                    $('#AlignLeft1').removeClass('col-sm-4');
+                    $('#AlignLeft1').removeClass('text-sm-left');
+                    $('#AlignLeft1').css('padding-left', '0px');
+
+                    $('#AlignLeft2').removeClass('col-sm-8');
+                    $('#AlignLeft2').removeClass('text-sm-right');
+
+                    $('#AlignLeft2').css('padding-left', '0');
+                    $('#AlignLeft2').css('padding-right', '0');
+                } else {
+                    if ($('#AlignLeft1').hasClass('col-sm-4')) {
+
+                    } else {
+                        $('#AlignLeft1').addClass('col-sm-4');
+                        $('#AlignLeft1').addClass('text-sm-left');
+                        $('#AlignLeft1').css('padding-left', '90px');
+
+                        $('#AlignLeft2').addClass('col-sm-8');
+                        $('#AlignLeft2').addClass('text-sm-right');
+
+                        $('#AlignLeft2').css('padding-left', '0px');
+                        $('#AlignLeft2').css('padding-right', '40px');
+                    }
+                }
+
+                if (scr < 621) {
+                    $('#searchForPageButton2').hide();    //searchForPageButtonsDiv3
+                    $('#searchForPageButtonsDiv').show()
+
+                } else {
+                    $('#searchForPageButton2').show();    //searchForPageButtonsDiv3
+                    $('#searchForPageButtonsDiv').hide()
+                }
+            }
+
+        </script>
+    }
+
+    <script>
+        var url_res = window.location.href;
+
+        function hasQueryParams(url) {
+            return url.indexOf('?kw') !== -1;
+        }
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        if (hasQueryParams(url_res) == true) {
+            // now close all accordion
+            $('.page-accordion .card-header').each(function () {
+                if ($(this).hasClass("collapsed") == false) {
+                    $(this).addClass("collapsed");   // all have collapsed
+                    $(this).attr("aria-expanded", false);
+                    $(this).find(".fa").removeClass("fa-chevron-circle-down");
+                }
+            });
+
+            $('.page-accordion .collapse-body').each(function () {
+                if ($(this).hasClass("show") == true) {
+                    $(this).removeClass("show");
+                }
+            });
+
+            // now get value of acc query string
+            var acc_value = getParameterByName('acc');
+            var acc_v = parseInt(acc_value) + 1;
+
+            $('div#ch' + acc_v).removeClass("collapsed");
+            $('div#ch' + acc_v).attr("aria-expanded", true);
+            $('div#ch' + acc_v).find(".fa").addClass("fa-chevron-circle-down");
+            $('div#ch' + acc_v).next().addClass("show");
+
+            // now do the highlighted
+            var acc_kw = getParameterByName('kw');
+
+            var re = new RegExp(acc_kw, 'i');
+
+            //get the html element in the main screen
+            var detail_page = $('div#detail_page').html();
+            //replace all string in the page detail
+            //var isStringMatch = detail_page.match(re);
+            //if (isStringMatch) {
+            //    var strReplace = '<span style="background-color: #FFFF00">' + isStringMatch[0] + '</span>';
+            //    $('div#detail_page').html(detail_page.replaceAll(isStringMatch[0], strReplace));
+            //}
+
+            // get all the td elements
+            $('div#detail_page td a').each(function () {
+                var elems = $(this).html();
+                var isMatchingLI = elems.match(re);
+                if (isMatchingLI) {
+                    var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                    if ($(this).find('img').length < 1)
+                        $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                    //console.log($(this).find('img'));
+                }
+            });
+
+            $('div#detail_page td li a').each(function () {
+                var elems = $(this).html();
+                var isMatchingLI = elems.match(re);
+                if (isMatchingLI) {
+                    var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                    $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                }
+            });
+
+            $('div#detail_page td p').each(function () {
+                var elems = $(this).html();
+                var isMatchingLI = elems.match(re);
+                if (isMatchingLI) {
+                    var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                    $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                }
+            });
+
+            $('div#detail_page td').each(function () {
+                var elems = $(this).html();
+                var isMatchingLI = elems.match(re);
+                if (isMatchingLI) {
+                    var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                    if ($(this).find('img').length < 1)
+                        $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                    //console.log($(this).find('img'));
+                }
+            });           
+
+            $('div#detail_page li').each(function () {
+                var elems = $(this).html();
+                var isMatchingLI = elems.match(re);
+                if (isMatchingLI) {
+                    var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                    if ($(this).find('a').length < 1)
+                        $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                }
+            });           
+
+            $('div#detail_page p').each(function () {
+                if ($(this).find('strong').find('a').length >= 1) {
+                    $(this).find('strong').find('a').each(function () {
+                        var elems = $(this).html();
+                        var isMatchingLI = elems.match(re);
+                        if (isMatchingLI) {
+                            var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                            $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                        }
+                    });
+                } else if ($(this).find('a').length >= 1) {
+                    $(this).find('a').each(function () {
+                        var elems = $(this).html();
+                        var isMatchingLI = elems.match(re);
+                        if (isMatchingLI) {
+                            var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                            $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                        }
+                    });
+                }
+                else {
+                    var elems = $(this).text();
+                    //console.log(elems);
+                    var isMatchingLI = elems.match(re);
+                    if (isMatchingLI) {
+                        var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                        $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                    }
+                }
+            });
+
+            // replace all the page header of the accordion
+            $('div.card-header').each(function () {
+                var elems = $(this).html();
+                var isStringMatcHeader = elems.match(re);
+                if (isStringMatcHeader) {
+                    var strReplace = '<span style="background-color: #FFFF00">' + isStringMatcHeader[0] + '</span>';
+                    $(this).html(elems.replaceAll(isStringMatcHeader[0], strReplace));
+                }
+            });
+
+            // replace all the side navs
+            //var side_navs = $('div#page_sidenavs').html();
+            //var isStringMatchSideNavs = side_navs.match(re);
+            //if (isStringMatchSideNavs) {
+            //    var strReplace = '<span style="background-color: #FFFF00">' + isStringMatchSideNavs[0] + '</span>';
+            //    $('div#page_sidenavs').html(side_navs.replaceAll(isStringMatchSideNavs[0], strReplace));
+            //}
+
+            // replace all the side navs ul > li > a
+            $('div#page_sidenavs ul li a').each(function () {
+                var elems = $(this).html();
+                var isMatchingLI = elems.match(re);
+                if (isMatchingLI) {
+                    var strReplace = '<span style="background-color: #FFFF00">' + isMatchingLI[0] + '</span>';
+                    $(this).html(elems.replaceAll(isMatchingLI[0], strReplace));
+                }
+            });
+
+            // replace the page bread crumbs
+            var bread_crumbs = $('div#page_breadcrumbs').html();
+            var isStringMatchBC = bread_crumbs.match(re);
+            if (isStringMatchBC) {
+                var strReplace = '<span style="background-color: #FFFF00">' + isStringMatchBC[0] + '</span>';
+                $('div#page_breadcrumbs').html(bread_crumbs.replaceAll(isStringMatchBC[0], strReplace));
+            }
+
+            // replace the ul > li > a elements
+            $('div.card-body ul li a').each(function () {
+                var elems = $(this).html();
+                var isMatchinLI = elems.match(re);
+                if (isMatchinLI) {
+                    var strReplace = '<span style="background-color: #FFFF00">' + isMatchinLI[0] + '</span>';
+                    $(this).html(elems.replaceAll(isMatchinLI[0], strReplace));
+                }
+            });
+        }
+
+        //bmenus
+        // A $( document ).ready() block.
+        $(document).ready(function () {
+            $('.bmenus').each(function () {
+                var x2 = $(this).attr('href')
+                var xi = $(this).text();
+                //console.log(x2);
+                if (x2 == "0") {
+                    $(this).attr("href", "/departments"); // Set herf value
+                }
+            });
+        });
+        // modal menu fix
+    </script>
+
+    <section class="s-khms">
+        <div class="modal fade modaBlocks modal-departments22" id="modal-bcrumbs" tabindex="-1" role="dialog" aria-labelledby="modal-department222" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center hs">Departments</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="modal-ul">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        var checkSubHome = 0;
+
+        $(document).ready(function () {
+            $('#modal-bcrumbs h5').text($(".modal-bread").text());
+
+            var pid = $(".modal-bread").attr('id');
+
+            let pat = window.location.href.split('Offices');
+
+            var formdata = "id=" + pid + "&href=" + pat[0];
+
+            let api = pat[0] + "SubHome/GetModal";
+
+            $('#modal-bcrumbs ul').empty();
+
+            $.ajax({
+                method: "get",
+                url: api,
+                cache: false,
+                crossdomain: true,
+                processdata: false,
+                contenttype: false,
+                async: true,
+                data: formdata,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    $('#modal-bcrumbs ul').append(response);
+                }
+            });
+        })
+
+        $('body').on('click', '.modal-bread', function () {
+            $('#modal-bcrumbs').modal('show');
+        });
+
+        // external link
+        $(document).on('click', '#modal-bcrumbs a[data-external="1"]', function (e) {
+            var element = $(this);
+            var wlocation = $(this).attr('href');
+            var meid = $(this).data("pdfid")
+
+            e.preventDefault();
+
+            $('#modalRedirect').each(function () {
+                var element2 = $(this);
+                $(this).fadeIn("fast");
+                $(this).toggleClass('show');
+                $(this).attr('aria-hidden', false);
+                $(this).attr('aria-modal', true);
+
+                if (element.hasClass('pdf')) {
+                    var data = "id=" + meid;
+                    var url = '@Url.Action("GetPdfLink")';
+
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        data: data,
+                        success: function (data2) {
+                            var extlink = data2;
+                            //console.log(extlink);
+                           // $(this).find('#continue').attr('href', extlink);
+                            element2.find('#continue').attr('href', extlink);
+                        }
+                    });
+                } else {
+                 //   $(this).find('#continue').attr('href', wlocation);   element2.find('#continue').attr('href', extlink);
+                    element2.find('#continue').attr('href', wlocation);
+                }
+            });
+        });
+
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+﻿.bg-img2 {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    overflow: hidden;
+}
+
+    .bg-img2 .image-bg {
+        opacity: 0;
+    }

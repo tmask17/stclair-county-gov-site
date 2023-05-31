@@ -1,0 +1,617 @@
+﻿@model pagebuilder.Model.Extlink
+@{
+    ViewBag.Title = "Edit";
+    var vi = 0;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@RenderPage("../Shared/PanelMenu.cshtml")
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.css" integrity="sha512-BVeRnUOL0G7d4gXmj+0VxpoiQuEibKQtlkclADKvCdNrESs0LA6+H8s1lU455VqWFtHBfF/pKDGw/CMat2hqOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+
+    .minicolors-input {
+        height: 30px !important;
+    }
+</style>
+
+<div class="panel panel-body page-edit panel-link">
+    @using (Html.BeginForm("Edit", "Extlinks", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-link form-link-edit" }))
+    {
+        @Html.AntiForgeryToken()
+        <input id="ImgNull" type="hidden" name="imgnull" value="0" />
+        <input id="menucollapse2" type="hidden" name="menucollapse" value="@Request.QueryString["menucollapse"]" />
+
+        if (ViewBag.PageTitle == "Hero Image")
+        {
+            <div class="form-horizontal">
+                <div class="row form-header">
+                    <div class="col-sm-6">
+                        <h4>Edit Hero Image</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row form-group form-image">
+                    @Html.Label("Image header", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @if (ViewBag.Img == true)
+                                {
+                                    <div class="fi fi-data-img">
+                                        <span class="fdi fdi-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <img class="fdi fdi-img" src="~/Extlinks/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" width="250" />
+                                    </div>
+                                    <input type="file" id="upload" name="fileImg" style="display:none;" />
+                                }
+                                else
+                                {
+                                    <input type="file" id="upload" name="fileImg" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group" style="display:none">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-offset-2 col-md-10 f-control">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+        else if (ViewBag.PageTitle == "Company Logo")
+        {
+            <div class="form-horizontal">
+                <div class="row form-header">
+                    <div class="col-sm-6">
+                        <h4>Edit Company Logo</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row form-group form-image">
+                    @Html.Label("Company Logo", new { @class = "control-label col-md-2" }) &nbsp; Note: Company logo must not exceed height of 300px
+
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @if (ViewBag.Img == true)
+                                {
+                                    <div class="fi fi-data-img">
+                                        <span class="fdi fdi-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <img id="normalw" class="fdi fdi-img" src="~/Extlinks/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" />
+                                    </div>
+                                    <input type="file" id="upload" name="fileImg" style="display:none;" class="clogo" />
+                                }
+                                else
+                                {
+                                    <input type="file" id="upload" name="fileImg" class="clogo" />
+                                }
+                            </div>
+                            @if (ViewBag.Alignment == true)
+                            {
+                                <div class="col-md-4">
+                                    <div class="row menu-settings-item menu-settings-item-alignment" data-id="#MsiSettingsAlignment">
+                                        <!--<label class="col-5">Alignment</label>
+                                        <div id="MsiSettingsAlignment" class="col-7 text-right">
+                                            <div class="d-flex justify-content-end">
+                                                <div class="al-radio al-radio-left text-center" data-radio="1">
+                                                    @Html.RadioButtonFor(model => model.Alignment, "1")
+                                                    <button class="btn btn-default btn-sm">
+                                                        |<i class="fa fa-long-arrow-left text-small" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="al-radio al-radio-center text-center" data-radio="2">
+                                                    @Html.RadioButtonFor(model => model.Alignment, "2")
+                                                    <button class="btn btn-default btn-sm">
+                                                        <i class="fa fa-caret-right" aria-hidden="true"></i>|<i class="fa fa-caret-left" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="al-radio al-radio-right text-center" data-radio="3">
+                                                    @Html.RadioButtonFor(model => model.Alignment, "3")
+                                                    <button class="btn btn-default btn-sm">
+                                                        <i class="fa fa-long-arrow-right text-small" aria-hidden="true"></i>|
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- code from Mario
+
+
+                <hr />
+                <div class="row form-group form-image">
+                    @Html.Label("Company Logo Size Percentage", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <br><br><br>
+                                <label for="ImagePercentage"> <h5>Type Percentage %:</h5></label>
+                                <input type="number" id="ImagePercentage" name="ImagePercentage" min="1" max="100" value="@ViewBag.ExLinkCompLogoPer" onchange="CompLogoPercent()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 -->
+
+
+                <div class="row form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-offset-2 col-md-10 f-control">
+                        <input type="submit" value="Save" class="btn btn-success" onclick="CompLogoPercent()" id="clogo_submit" />
+                    </div>
+                </div>
+            </div>
+        }
+        else if (ViewBag.PageTitle == "Footer Logo")
+        {
+            <div class="form-horizontal">
+                <div class="row form-header">
+                    <div class="col-sm-6">
+                        <h4>Edit Footer Logo</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row form-group form-image">
+                    @Html.Label("Footer Logo", new { @class = "control-label col-md-2" })  &nbsp; Note: Company logo must not exceed height of 70px
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @if (ViewBag.Img == true)
+                                {
+                                    <div class="fi fi-data-img">
+                                        <span class="fdi fdi-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <img id="normalw" class="fdi fdi-img" src="~/Extlinks/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" />
+                                    </div>
+                                    <input type="file" id="upload" name="fileImg" style="display:none;" class="flogo" />
+                                }
+                                else
+                                {
+                                    <input type="file" id="upload" name="fileImg" class="flogo" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--<div class="row form-group form-image">
+                    @Html.Label("Footer Logo Size Percentage", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <br><br><br>
+                                <label for="ImagePercentageFooter"> <h5>Type Percentage %:</h5></label>
+                                <input type="number" id="ImagePercentageFooter" name="ImagePercentageFooter" min="1" max="100" value="@ViewBag.ExLinkFooterLogoPer">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <hr />
+                <div class="row form-group form-image">
+                    @Html.Label("Footer Banner Color", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <br><br><br>
+                                <label for="BannerColor"> <h5>Select Color:</h5>@ViewBag.ExLinkBanner</label>
+                                <input type="color" id="FooterBannerColor2" name="BannerColor" value="@ViewBag.ExLinkBanner">
+
+                              
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end code from Mario -->
+                <div class="row form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-offset-2 col-md-10 f-control">
+                        <!-- code from Mario-->
+
+                        <input type="submit" value="Save" class="btn btn-success" onclick="FooterPercentageBannerColor()" id="clogo_submit" />
+                    </div>
+                </div>
+            </div>
+        }
+        else if (ViewBag.PageTitle == "Favicon")
+        {
+            <div class="form-horizontal">
+                <div class="row form-header">
+                    <div class="col-sm-6">
+                        <h4>Edit Favicon</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row form-group form-image">
+                    @Html.Label("Favicon", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @if (ViewBag.Img == true)
+                                {
+                                    <div class="fi fi-data-img">
+                                        <span class="fdi fdi-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <img class="fdi fdi-img" src="~/Extlinks/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" width="250" />
+                                    </div>
+                                    <input type="file" id="upload" name="fileImg" style="display:none;" />
+                                }
+                                else
+                                {
+                                    <input type="file" id="upload" name="fileImg" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-offset-2 col-md-10 f-control">
+                        <!-- end code from Mario-->
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        else if (ViewBag.PageTitle == "Quick Links Logo")
+        {
+            <div class="form-horizontal">
+                <div class="row form-header">
+                    <div class="col-sm-6">
+                        <h4>Edit Quick Links Logo</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row form-group form-image">
+                    @Html.Label("Quick Links Logo", new { @class = "control-label col-md-2" }) &nbsp; Note: Quick links logo must not exceed 100px
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @if (ViewBag.Img == true)
+                                {
+                                    <div class="fi fi-data-img">
+                                        <span class="fdi fdi-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <img id="normalw" class="fdi fdi-img" src="~/Extlinks/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" />
+                                    </div>
+                                    <input type="file" id="upload" name="fileImg" style="display:none;" class="qlogo" />
+                                }
+                                else
+                                {
+                                    <input type="file" id="upload" name="fileImg" class="qlogo" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<hr />
+                <div class="row form-group form-image">
+                    @Html.Label("Quick Links Logo Size Percentage", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <br><br><br>
+                                <label for="ImagePercentageSideNav"> <h5>Type Percentage %:</h5></label>
+                                <input type="number" id="ImagePercentageSideNav" name="ImagePercentageSideNav" min="1" max="100" value="@ViewBag.ExLinkSideNavLogoPer">
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+                <div class="row form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-offset-2 col-md-10 f-control">
+                        <input type="submit" value="Save" class="btn btn-success" onclick="SideNavLogoPercent()" id="clogo_submit" />
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+<div class="form-horizontal">
+    <div class="row form-header">
+        <div class="col-sm-6">
+            <h4>Edit Url</h4>
+        </div>
+        <div class="col-sm-6 text-right">
+            <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                Back to List
+            </a>
+        </div>
+    </div>
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row form-group form-image">
+        @Html.Label("Image header", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-8">
+                    @if (ViewBag.Img == true)
+                    {
+                        <div class="fi fi-data-img">
+                            <span class="fdi fdi-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <img class="fdi fdi-img" src="~/Extlinks/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" width="250" />
+                        </div>
+                        <input type="file" id="upload" name="fileImg" style="display:none;" />
+                    }
+                    else
+                    {
+                        <input type="file" id="upload" name="fileImg" />
+                    }
+                </div>
+                @if (ViewBag.Alignment == true)
+                {
+                    <div class="col-md-4">
+                        <div class="row menu-settings-item menu-settings-item-alignment" data-id="#MsiSettingsAlignment">
+                            <label class="col-5">Alignment</label>
+                            <div id="MsiSettingsAlignment" class="col-7 text-right">
+                                <div class="d-flex justify-content-end">
+                                    <div class="al-radio al-radio-left text-center" data-radio="1">
+                                        @Html.RadioButtonFor(model => model.Alignment, "1")
+                                        <button class="btn btn-default btn-sm">
+                                            |<i class="fa fa-long-arrow-left text-small" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="al-radio al-radio-center text-center" data-radio="2">
+                                        @Html.RadioButtonFor(model => model.Alignment, "2")
+                                        <button class="btn btn-default btn-sm">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>|<i class="fa fa-caret-left" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="al-radio al-radio-right text-center" data-radio="3">
+                                        @Html.RadioButtonFor(model => model.Alignment, "3")
+                                        <button class="btn btn-default btn-sm">
+                                            <i class="fa fa-long-arrow-right text-small" aria-hidden="true"></i>|
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(model => model.UrlLink, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UrlLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UrlLink, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row form-group">
+        @Html.LabelFor(model => model.Icon, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Icon, new { htmlAttributes = new { @class = "form-control form-control-icon" } })
+            @Html.ValidationMessageFor(model => model.Icon, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row form-group">
+        @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control colorpicker" } })
+            @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row form-group">
+        @Html.LabelFor(model => model.IsExternal, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <span class="pub -yes">
+                <span class="pl">Yes</span>
+                @Html.RadioButtonFor(model => model.IsExternal, "1")
+            </span>
+            <span class="pub -no">
+                <span class="pl">No</span>
+                @Html.RadioButtonFor(model => model.IsExternal, "0")
+            </span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2"></div>
+        <div class="col-md-offset-2 col-md-10 f-control">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+        }
+
+
+    }
+
+    @using (Html.BeginForm("Edit", "Extlinks", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-edit-icon", @style = "display: none" }))
+    {
+        @Html.AntiForgeryToken()
+        <input id="ImgNull" type="hidden" name="imgnull" value="3" />
+        <input id="menucollapse" type="hidden" name="menucollapse" value="1" />
+        <div class="form-horizontal">
+            <div class="row form-header">
+                <div class="col-sm-6">
+                    <h4>Edit Icon</h4>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="control-label col-md-2">Link</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UrlLink, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UrlLink, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Icon, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Icon, new { htmlAttributes = new { @class = "form-control form-control-icon" } })
+                    @Html.ValidationMessageFor(model => model.Icon, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control colorpicker" } })
+                    @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.LabelFor(model => model.IsExternal, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <span class="pub -yes">
+                        <span class="pl">Yes</span>
+                        @Html.RadioButtonFor(model => model.IsExternal, "1")
+                    </span>
+                    <span class="pub -no">
+                        <span class="pl">No</span>
+                        @Html.RadioButtonFor(model => model.IsExternal, "0")
+                    </span>
+                </div>
+            </div>     <!--  </div>  <div class="row form-group">   added code by sir lester   -->
+
+
+            <div class="row form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-offset-2 col-md-10 f-control">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.js" integrity="sha512-vBqPkpOdZM0O7YezzE8xaoUdyt4Z2d+gLrY0AMvmNPLdLuNzvreTopyuaM9/FiRzHs1bwWzYDJgH6STcuNXpqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(".colorpicker").minicolors({
+        letterCase: 'uppercase',
+        defaultValue: '#999999'
+    });
+
+    $('.minicolors-swatch').hide();
+
+    function change_color(target) {
+        var found = false;
+        if (~target.indexOf("facebook")) {
+            $(".colorpicker").val("#3b5998")
+            found = true
+        }
+
+        if (~target.indexOf("google")) {
+            $(".colorpicker").val("#c71610")
+            found = true
+        }
+
+        if (~target.indexOf("twitter")) {
+            $(".colorpicker").val("#00acee")
+            found = true
+        }
+
+        if (~target.indexOf("envelope")) {
+            $(".colorpicker").val("#4285F4")
+            found = true
+        }
+
+        if (~target.indexOf("insta")) {
+            $(".colorpicker").val("#D62976")
+            found = true
+        }
+
+        if (~target.indexOf("youtube")) {
+            $(".colorpicker").val("#FF0000")
+            found = true
+        }
+
+        if (!found) {
+            $(".colorpicker").val("#999999")
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $(".form-control-icon").change(function () {
+            var target = $(this).val();
+            change_color(target)
+        });
+    });
+
+</script>
+
+
+
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/color-polyfill.js"></script>
+    <script src="~/Scripts/spectrum.js"></script>
+        <link rel='stylesheet' href="~/Scripts/spectrum.css" />*@
+
+
+

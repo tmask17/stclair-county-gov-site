@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "RepURL";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+<h2>RepURL</h2>
+
+@using (Html.BeginForm("RepUrl2", "Home", FormMethod.Post))
+{
+
+    <input name="a" type="text" />
+    <input name="b" type="text" />
+
+
+    <input type="submit" value="Submit" />
+}
+
+

@@ -1,0 +1,374 @@
+﻿@model pagebuilder.Model.Page
+
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    ViewBag.Title = @Html.DisplayFor(model => model.Title);
+    var pageIdString = @Html.DisplayFor(model => model.Id).ToString();
+    int pageIdInt = Convert.ToInt32(pageIdString);
+    var vi = 0;
+    var si = 0;
+    var bc = 0;
+    var hasParent = 0;
+    var hassubmenu = 0;
+}
+
+@if (ViewBag.HasChild == true)
+{
+    foreach (var subitems in ViewBag.ChildMenu)
+    {
+        hassubmenu++;
+    }
+}
+
+
+<!-- NOTE: Add code for verifying if password needs to be entered-->
+<p style="display: none" id="isPasswordProtectedPage">@Model.HasPassword</p>
+<p style="display: none" id="currentPageId">@Model.Id</p>
+
+@RenderPage("../Shared/SearchForPage.cshtml")
+
+<!-- Modal For Password -->
+<div class="modal fade" id="pagePasswordModal" tabindex="-1" role="dialog" aria-labelledby="pagePasswordModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">This Page is Password Protected</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Access to the contents of this page is restricted. To view the contents
+                    of the page, type the correct password and then click 'Confirm'.
+                </p>
+                <input type="password" class="form-control mt-3" name="pagePassword" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirmPasswordButton">Confirm</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@foreach (var mparent in ViewBag.Parent)
+{
+    var mstId = mparent.ParentId.ToString();
+
+    foreach (var Mchilditems in ViewData[mstId])
+    {
+        if (Mchilditems.Type == 1)
+        {
+            foreach (var MSubPageItem in ViewBag.PageItems)
+            {
+                if (Mchilditems.PageId == MSubPageItem.Id)
+                {
+                    hassubmenu++;
+                }
+            }
+        }
+    }
+}
+<style>
+    .bcrumbs .bl:hover {
+        text-decoration: underline;
+    }
+</style>
+
+@*<div class="row page-item page-item-header bg-img" data-target=".image-bg">
+        <div class="col-12">
+            @if (ViewBag.Img == true)
+            {
+                <img id="bgground" class="image-bg" src="~/Pages/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" width="100%" /> }
+            else
+            {
+                <img class="image-bg" src="~/Content/Images/m-img-banner.jpg" alt="" width="100%" />}
+            <div class="page-header page-header-title">
+                <h1>
+                    @Html.DisplayFor(model => model.Title)
+                </h1>
+            </div>
+        </div>
+    </div>
+*@
+
+<div id="page_breadcrumbs" class="row page-item page-item-bcrumbs">
+    <div class="col-12">
+        @Html.Raw(HttpUtility.HtmlDecode(ViewBag.PageBreadCrumbs))
+    </div>
+</div>
+
+<div class="row page-item page-item-content" id="detailsPageContent">
+    @if (ViewBag.HasChildCheck == 1)
+    {
+        if (ViewBag.ShowSum != 0)
+        {
+            <div class="page-content page-content-sidenav @(ViewBag.ShowSum != 0 ? "col-3" : "hidden")">
+
+                <div class="page-sidenav page-sidenav-summary">
+                    @Html.DisplayTextFor(model => model.Summary)
+                </div>
+
+                <!-- starting line of side nav-->
+
+                <div id="page_sidenavs" class="page-sidenav page-sidenav-nav">
+                    <ul class="sidenav-group">
+                        @if (ViewBag.HasChild == true)
+                        {
+                            <li class="snav-item">
+                                <a>@Html.DisplayTextFor(model => model.Title) </a>
+                                <ul>
+                                    @foreach (var childMenuGroup in ViewBag.ChildMenu)
+                                    {
+                                        <li class="snav-items snav-items-default">
+                                            @if (childMenuGroup.Type == 1)
+                                            {
+                                                foreach (var subPageItem in ViewBag.PageItems)
+                                                {
+                                                    if (childMenuGroup.PageId == subPageItem.Id)
+                                                    {
+                                                        if (subPageItem.Publish == 1)
+                                                        {
+                                                            if (childMenuGroup.SubHome == 1)
+                                                            {
+                                                            <li class="snav-items snav-items-default test sub-page-item">
+                                                                <a href="~/SubHome/Index/@childMenuGroup.PageId?pageparent=@pageIdString">@childMenuGroup.Name</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="snav-items snav-items-default test sub-page-item">
+                                                                <a href="@childMenuGroup.PageId?pageparent=@pageIdString">@childMenuGroup.Name</a>
+                                                            </li>
+                                                        }
+
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else if (childMenuGroup.Type == 2)
+                                        {
+                                            foreach (var pdfItem in ViewBag.PdfItems)
+                                            {
+                                                if (childMenuGroup.PdfId == pdfItem.Id)
+                                                {
+                                                    int IsExternal = 0;
+                                                    if (pdfItem.IsExternal != null)
+                                                    {
+                                                        if (pdfItem.IsExternal == 1)
+                                                        {
+                                                            IsExternal = 1;
+                                                        }
+                                                    }
+                                                    <li class="snav-items snav-items-default pdf-item">
+                                                        @if (pdfItem.FileName != null)
+                                                        {
+                                                            <a href="~/Content/PdfFiles/@(pdfItem.FileName)" data-external="@IsExternal" target="_blank">@pdfItem.Title</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@pdfItem.ExLink" data-external="@IsExternal" target="_blank">@pdfItem.Title</a>}
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                        else if (childMenuGroup.Type == 3)
+                                        {
+                                            foreach (var exLinkItem in ViewBag.ExLinkItems)
+                                            {
+                                                if (childMenuGroup.ExtlinkId == exLinkItem.Id)
+                                                {
+                                                    int IsExternal = 0;
+                                                    if (exLinkItem.IsExternal != null)
+                                                    {
+                                                        if (exLinkItem.IsExternal == 1)
+                                                        {
+                                                            IsExternal = 1;
+                                                        }
+                                                    }
+                                                    <li class="snav-items snav-items-default ex-link-item">
+                                                        <a href="@exLinkItem.UrlLink" data-external="@IsExternal" target="_blank">@exLinkItem.Title</a>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    </li>
+                                }
+                                </ul>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                    <!-- endline of side nav-->
+                </div>
+            }
+    }
+
+    <div id="detail_page" class="col-9 page-content page-content-main @ViewBag.HasNavMenu @(ViewBag.ShowSum == 0 ? "col-12" : null)">
+        @*<div id="detail_page" class="col-9 page-content page-content-main @ViewBag.HasNavMenu">*@
+        <!--  <div class="col-9 page-content page-content-main hassubmenu != 0 ? "col-9":"col-12")">-->
+        @if (ViewBag.Subcontent != null)
+        {
+            <div class="page-main page-main-text textcontent">
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(@Model.Maintext))
+
+            </div>
+            <!--  <div class="page-main page-plaintext"></div>  -->
+
+            <div id="pageAcc" class="accordion page-accordion">
+                <div class="card">
+                    @{
+                        foreach (var item in @ViewBag.subContentItems)
+                        {
+                            var elementClass = "";
+                            var shown = "";
+                            if (Model.PageContents.Any(x => x.Enable == true))
+                            {
+                                if (Model.PageContents.Select(s => s.Enable).ToArray()[vi])
+                                {
+                                    elementClass = "fa-chevron-circle-down";
+                                    shown = "show";
+                                }
+                            }
+                            else
+                            {
+                                if (vi == 0)
+                                {
+                                    elementClass = "fa-chevron-circle-down";
+                                    shown = "show";
+                                }
+                            }
+
+
+                            <div id="ch@(vi)" class="card-header" data-toggle="collapse" data-target="#collapse@(vi)" data-body="@(vi)" aria-expanded="@(vi == 1 ? "true" : "false")" aria-controls="collapse@(vi)">
+                                @*<h4>@Html.Raw(System.Web.HttpUtility.HtmlDecode(item.Title))</h4>*@
+                                <div style="margin:0; font-size: 0.85rem; font-weight:bold;">@Html.Raw(System.Web.HttpUtility.HtmlDecode(item.Title))</div>
+                                <span class="btn-cardbody">
+                                    <i class="fa fa-chevron-circle-right @(elementClass) " aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <div id="collapse@(vi)" class="collapse @(shown) collapse-body" data-header="#ch@(vi)">
+
+                                <div class="card-body">
+                                    @Html.Raw(System.Web.HttpUtility.HtmlDecode(@item.Content))
+
+                                </div>
+                            </div>
+
+
+                            vi++;
+                        } //end of for each
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="page-main page-main-text textcontent">
+                @Html.DisplayTextFor(model => model.Maintext)
+
+            </div>
+            <div class="page-main page-plaintext"></div>
+        }
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="page-main page-action">
+                <p>
+
+                </p>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade modaBlocks modal-departments22" id="modalBlock-department22" tabindex="-1" role="dialog" aria-labelledby="modal-department222" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Departments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    @foreach (var MenuListItems in ViewBag.SubMenus2)
+                    {
+                        if (MenuListItems.ParentId == 16)
+                        {
+                            if (MenuListItems.Type == 1)
+                            {
+                                foreach (var SubPageItem in ViewBag.PageItems2)
+                                {
+                                    if (MenuListItems.PageId == SubPageItem.Id)
+                                    {
+                                        if (SubPageItem.Publish == 1)
+                                        {
+                                            <li>
+                                                <a style="color: #0b5ca8;" href="~/Offices/@SubPageItem.Id">
+                                                    @SubPageItem.Title
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            }
+                            else if (MenuListItems.Type == 2)
+                            {
+                                foreach (var SubPdfItem in ViewBag.PdfItems2)
+                                {
+                                    if (MenuListItems.PageId == SubPdfItem.Id)
+                                    {
+                                        if (MenuListItems.PdfId == SubPdfItem.Id && SubPdfItem.Publish == 1)
+                                        {
+                                            int PdfExternal = 0;
+
+                                            if (SubPdfItem.IsExternal != null && SubPdfItem.IsExternal == 1)
+                                            {
+                                                PdfExternal = SubPdfItem.IsExternal;
+                                            }
+
+                                            <li>
+                                                <a style="color: #0b5ca8;" href="~/Offices/@SubPdfItem.Id" data-external="@PdfExternal">
+                                                    <span>@SubPdfItem.Title</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            }
+                            else if (MenuListItems.Type == 3)
+                            {
+                                foreach (var SubLinkItem in ViewBag.ExLinkItems2)
+                                {
+                                    if (MenuListItems.ExtlinkId == SubLinkItem.Id)
+                                    {
+                                        int LinkExternal = 0;
+
+                                        if (SubLinkItem.IsExternal != null && SubLinkItem.IsExternal == 1)
+                                        {
+                                            LinkExternal = SubLinkItem.IsExternal;
+                                        }
+
+                                        <li>
+                                            <a style="color: #0b5ca8;" href="@SubLinkItem.UrlLink" data-external="@LinkExternal">
+
+                                                <span>@SubLinkItem.Title</span>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

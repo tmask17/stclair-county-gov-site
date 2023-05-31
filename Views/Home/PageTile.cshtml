@@ -1,0 +1,12 @@
+﻿@using pagebuilder.Model
+@model pagebuilder.ViewModel.PageViewModel
+
+@foreach (var PageItem in Model)
+{
+
+    <a class="bl bg-img" href="~/Offices/@PageItem.Id" data-target=".image-bg">
+        <img class="image-bg" src="~/Pages/PageImages/@PageItem.Id" style="width:100%" />
+        <h2>@PageItem.Title</h2>
+    </a>
+
+}

@@ -1,0 +1,79 @@
+﻿ITG PageBuilder v1.10.0
+
+v1.10.0
+* NEW: Enable multiple Home page intro messages on Sub Home Pages.
+* NEW: The Home Page Intro requires a title. Updating so the only required field is the text section (meaning you don't need to have a title).
+* NEW: Login improvement - Faster, shows message when credentials are incorrect, keeps login session active for 3 days.
+* NEW: When accordion is opened, allow user to resize the length of the text editor. 
+* NEW: Will add label so Summary that says "Summary will show when there is a subpage and Enable Summary is set to Yes.".
+* FIX: When I save changes to the Homepage Intro section, it collapses the menu and you have to navigate back to Homepage Intro menu.
+* FIX: Default HomePage intro does not always show, apply database fix to resolve issue.
+* FIX: Fix Modal issue where sorting order is incorrect.
+
+v1.9.2
+11-23-2022
+* Fix saving Homepage Intro back to open record
+* Fix Homepage Intro doesn't have Title section doesn't appear.
+
+10-12-2022
+* Fix missing security content/section when new page is created
+* Fix "Back to Types"
+* Fix Modal content to reset when click AddChild button
+* Remove "Back to List" (visible when )
+
+v1.8
+Security Module updated to support Sub Home tile page.
+
+v1.7 
+09-06-2022
+* User Security feature is added to Admin menu builder
+ 
+v1.6 
+08-25-2022
+* Added Subhomepage and Subhomepage Tiles feature
+* Small performance improvement to Admin Menu Builder
+
+v1.5 
+03-24-2022
+* Replace the search functionality (content search)
+* Security Feature Pre-Work (initial version)
+* Header Icon color picker
+
+08-31-2021
+* Enhancement of PB Master Build.
+* Markup issue while loading sub pages was remove.
+
+07-12-2021
+* Feauture/s: Replacing CKFinder by Roxy Filemanager
+
+07-05-2021
+* Feauture/s: PageBuilder Version tracker in Modal Popup Maintenance mode
+
+07-01-2021
+* Feauture/s: Homepage announcement popup Maintenance mode              
+
+06-29-2021
+*  Fixed: Footer modals in mobile landscape layout.
+
+06-11-2021
+*  Fixed: Homepage tile (Modal) editing title and image.
+
+06-08-2021
+*  Fixed: Issue on Homepage Tile (modal) on not rendering the image
+
+05-28-2021
+*  Fixed: - Cut-off icon issue on the last item of Quicklinks
+
+          - Left justiy issue of QuickLinks Logo (included fix for IE)
+
+05-27-2021
+*  Fixed: - Searching of pages. Only published page will be listed
+ 
+05-19-2021
+* Feature: - Added external link functionality (pop-up box) for Header icons
+
+-------------------------------------------------------------------------------
+ITG PageBuilder 1.11
+
+06-25-2021
+* Feature: - Added functionality for PDF uploading using CKEditor and CKFinder

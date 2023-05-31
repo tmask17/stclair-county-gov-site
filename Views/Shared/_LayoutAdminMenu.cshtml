@@ -1,0 +1,1776 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>@pagebuilder.Utils.Common.CompanyName</title>
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.standalone.css" rel="stylesheet" />
+    <link href="~/Content/jquery-customselect-1.9.1.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" href="~/ExtLinks/LinkImages/@ViewBag.Favicon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="~/Content/simple-iconpicker.min.css" rel='stylesheet' type='text/css' />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/Content/sccweb/search-icon.css" />
+    <link href="~/Content/plugin/toastr/toastr.css" rel="stylesheet" />
+
+    <style>
+        .loader {
+            width: 100%;
+            height: 100%;
+            background: url("/loader.gif") 50% 50% no-repeat;
+            background-size: 50px;
+        }
+
+        #enqlink {
+            display: none;
+        }
+
+        #er1, #er2 {
+            color: red;
+        }
+        /*  .carousel-control-prev {
+            margin-left: -68px;
+        }
+
+        .carousel-control-next {
+            margin-right: -68px;
+        } */
+
+        #det {
+            background: rgba(0,0,0,0.4);
+            height: 25vh;
+            position: relative;
+            top: 10%;
+        }
+
+        header .head-content {
+        }
+
+        .animator {
+            padding: 10px 10px;
+        }
+
+        .autoModal.modal .modal-body {
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+
+@{
+    var LogoHref = Request.Url.AbsoluteUri.ToString().Split(new string[] { "/Offices" }, StringSplitOptions.None)[0];
+}
+<body class="@ViewBag.Class">
+    <div class="container-fluid body-content">
+        <!--
+             <div class="modal fade modal-redirect" id="modalRedirect" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title text-center">
+                            <img class="cmp-image" src="~/ExtLinks/LinkImages/@ViewBag.Favicon" /><br /><span class="cmp">You are now leaving</span><span class="cmp">@ViewBag.Mt</span>
+                        </p>
+                        <button type="button" class="close cancel" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <a href="" class="btn btn-primary btn-sm" id="continue" target="_blank">Continue</a>
+                        <button id="cancel" type="button" class="btn btn-default btn-sm cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            -->
+        <!-- Header -->
+        <header>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1 class="admin-title">@pagebuilder.Utils.Common.PageTitle <span><a href="#ModalVersion" data-toggle="modal" data-target="#ModalVersion">@pagebuilder.Utils.Common.AppVersion</a></span></h1>
+                </div>
+                <div class="col-sm-6 text-right d-flex justify-content-end align-items-center">
+                    <a href="~/MenuGroups" class="btn btn-success btn-sm admin-btn-back">Back</a>
+                    @using (Html.BeginForm("Logout", "Admin", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <button type="submit" class="btn btn-default btn-sm">Logout</button>
+                    }
+
+                </div>
+                <div>
+                    <img src="~/ExtLinks/LinkImages/@ViewBag.Favicon" style="width:5%;margin-left:10px;margin-right:8px; float: left;" />
+                    <span><strong>@pagebuilder.Utils.Common.CompanyName</strong></span>
+                    <p style="float:right; margin-top: 10px;">@User.Identity.Name</p>
+                </div>
+        </header>
+        <!-- End Header -->
+        <div class="mainbody">
+            @RenderBody()
+        </div>
+
+        <!-- Footer -->
+        <!-- End Footer -->
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+
+    <script>
+    var ROOT = '@Url.Content("~")';
+    </script>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!--
+         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  -->
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-customselect-1.9.1.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+    @Scripts.Render("~/bundles/modernizr")
+    <!--    <script>CKEDITOR.replace('textEdit');</script>-->
+    <!--<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>-->
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>-->
+    <script type='text/javascript' src="~/Scripts/simple-iconpicker.min.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+    <!-- Menugroups Script-->
+
+    <script src="~/Scripts/sccweb/views/pages/edit-page.js"></script>
+    <script src="~/Scripts/sccweb/Maintenance/MaintenanceModelScript.js"></script>
+    <!-- Password Script-->
+    <script src="~/Content/plugin/toastr/toastr.js"></script>
+
+    <script>
+        var whichInput = 0;
+
+        $(document).ready(function () {
+            //FORCE FIXING WHITE FOOTER
+            //$('footer').css('color', '#fff');
+            //FORCE FIXING WHITE FOOTER
+
+            $('.form-control-icon').iconpicker('.form-control-icon');
+
+            $('.pmg3').sortable({
+                connectWith: '.pmg3',
+                placeholder: 'card2',
+                cursor: 'move',
+
+                update: function (e, ui) {
+                    var element = $(this);
+                    var id_string = element.attr("id");
+                    //console.log(id_string);
+                    var i = 0;
+                    $('#' + id_string + '> li').each(function () {
+
+                        //console.log("li: " + $(this).attr("id"));
+
+                        var li_string = $(this).attr("id");
+
+                        var del_id = li_string.split("-");
+                        var parent_id = id_string.split("-");
+
+                        var cid = del_id[1];
+                        var pid = parent_id[1];
+
+                        var info2 = 'id=' + cid + '&sortid=' + i + '&pd=' + pid;
+
+                        var url_sub = ROOT + 'Menugroups/Sort';
+                        //console.log(url_sub);
+                        $.ajax({
+                            type: "GET",
+                            url: url_sub,
+                            data: info2,
+                            success: function () {
+                            }
+                        });
+                        //  console.log("i: " +i);
+                        i++;
+                    });
+                }
+            });
+            $('.pmg3').disableSelection();
+
+            $('.pmg').sortable({
+                connectWith: '.pmg',
+                placeholder: 'card2',
+                cursor: 'move',
+
+                update: function (e, ui) {
+                    var element = $(this);
+                    var id_string = element.attr("id");
+                    //console.log(id_string);
+                    var i = 0;
+                    $('#' + id_string + '> li').each(function () {
+
+                        //console.log("li: " + $(this).attr("id"));
+
+                        var li_string = $(this).attr("id");
+
+                        var del_id = li_string.split("-");
+                        var parent_id = id_string.split("-");
+
+                        var cid = del_id[1];
+                        var pid = parent_id[1];
+
+                        var info2 = 'id=' + cid + '&sortid=' + i + '&pd=' + pid;
+
+                        var url_sub = ROOT + 'Menugroups/Sort';
+                        //console.log(url_sub);
+                        $.ajax({
+                            type: "GET",
+                            url: url_sub,
+                            data: info2,
+                            success: function () {
+                            }
+                        });
+                        //  console.log("i: " +i);
+                        i++;
+                    });
+                }
+            });
+            $('.pmg').disableSelection();
+        });
+
+        // Sortable issue solved by sir alistair --> CKEditor missing contents -> fix section
+        $(document).ready(function () {
+            $('.pmgE').sortable({
+                connectWith: '.pmgE',
+                placeholder: 'card2',
+                update: function (e, ui) {
+                    for (name in CKEDITOR.instances) {
+                        CKEDITOR.instances[name].destroy(true);
+                    }
+                    ckload();
+                },
+                sort: function (event, ui) {
+                    // eugene code
+                    //  $(ui.placeholder).html(Number($('.pmgE > div:visible').index(ui.placeholder) + 1));
+                },
+                /*
+                change: function (event, ui) {
+                    var start_pos = ui.item.data('start_pos');
+                    var index = ui.placeholder.index();
+
+                    // Accordion Sorting
+                    var prev = $("#a_set_" + start_pos);
+                    var curr = $("#a_set_" + index);
+
+                    var curr_id = curr.attr('id');
+                    var prev_id = prev.attr('id');
+
+                    console.log(prev);
+                    console.log(curr);
+
+                    prev.attr('id', curr_id);
+                    curr.attr('id', prev_id);
+
+                    console.log(prev);
+                    console.log(curr);
+
+                    // Content Locking Position
+                    var prev = $("#lock_set_" + start_pos);
+                    var curr = $("#lock_set_" + index);
+
+                    var curr_id = curr.attr('id');
+                    var prev_id = prev.attr('id');
+
+                    console.log(prev);
+                    console.log(curr);
+
+                    prev.attr('id', curr_id);
+                    curr.attr('id', prev_id);
+
+                    console.log(prev);
+                    console.log(curr);
+                },
+                */
+                start: function (event, ui) {
+                    var start_pos = ui.item.index();
+                    ui.item.data('start_pos', start_pos);
+                    /*  for (name in CKEDITOR.instances) {
+                          CKEDITOR.instances[name].destroy(true);
+                      }  */
+                },
+                stop: function (e, ui) {
+                    for (name in CKEDITOR.instances) {
+                        CKEDITOR.instances[name].destroy(true);
+                    }
+                    ckload();
+                }
+            });
+            $('.pmgE').disableSelection();
+            //   ckload();
+
+        });
+
+        function ckload() {
+            $('textarea[name="subcontent"]').each(function () {
+                var ck_Id = $(this).attr("id");
+                //console.log(ck_Id);
+                CKEDITOR.replace(ck_Id);
+            });
+        }
+
+    </script>
+    <script>
+
+        $(document).ready(function () {
+
+
+			$('.CompanyLogo22').attr('href', '@LogoHref');
+
+            $.fn.modal.Constructor.prototype._enforceFocus = function _enforceFocus() {
+                var _this4 = this;
+                $(document).on(Event.FOCUSIN, function (event) {
+                    if (
+                        document !== event.target
+                        && _this4._element !== event.target
+                        && $(_this4._element).has(event.target).length === 0
+                        && !$(event.target.parentNode).hasClass('cke_dialog_ui_input_select')
+                        && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_textarea')
+                        && !$(event.target.parentNode).hasClass('cke_dialog_ui_input_text')
+                    ) {
+                        _this4._element.focus();
+                    }
+                });
+            };
+
+
+        });
+
+    </script>
+    <!-- End Menugroups Script-->
+    <!-- Chat Section-->
+    <!-- Quick Link Section-->
+    <script>
+        $('body').on('click', '#eqlink_1', function () {
+            var ele = $(this).attr('id');
+            var idx = ele.split('_');
+
+            if ($(this).hasClass("set") == false) {
+                $(this).addClass("set");
+                $('#enqlink').show(); // feature setting
+
+                //console.log("1");
+
+                $('#sortable-1').hide();
+                $('#eqtoggle_' + idx[1]).hide();
+                $('.qblink').hide();
+            } else {
+                $(this).removeClass("set");
+                $('#enqlink').hide();
+                //console.log("0");
+                $('#sortable-1').show();
+                $('#eqtoggle_' + idx[1]).show();
+                $('.qblink').show();
+            }
+        });
+
+        //homepage tiles meta keywords
+        $('body').on('click', '.tilecheck', function () {
+            var ele = $(this).attr('id');
+            var idx = ele.split('_');
+
+            if ($(this).hasClass("set") == false) {
+                $(this).addClass("set");
+                $('#enqtiles').show(); // feature setting
+
+                //console.log("1");
+
+                $('#sortable-' + idx[1]).hide();
+                $('#eqtoggle_' + idx[1]).hide();
+                $('.btnhp').hide();
+
+            } else {
+                $(this).removeClass("set");
+                $('#enqtiles').hide();
+                //console.log("0");
+                $('#sortable-' + idx[1]).show();
+                $('#eqtoggle_' + idx[1]).show();
+                $('.btnhp').show();
+            }
+        });
+
+        $('body').on('change', '#en1', function () {
+            var data ="id=" +  $(this).val();
+            var url = '@Url.Action("Qlink")';
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: data,
+                success: function (data) {
+
+                }
+             });
+
+        });
+         $('body').on('change', '#en2', function () {
+            var data = "id=" + $(this).val();
+            var url = '@Url.Action("Qlink")';
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: data,
+                success: function (data) {
+
+                }
+             });
+         });
+
+        $('a[data-external="1"]').click(function (e) {
+        var element = $(this);
+        var wlocation = $(this).attr('href');
+        var meid = $(this).data("pdfid")
+        e.preventDefault();
+
+            $('#modalRedirect').each(function () {
+                var element2 = $(this);
+                $(this).fadeIn("fast");
+                $(this).toggleClass('show');
+                $(this).attr('aria-hidden', false);
+                $(this).attr('aria-modal', true);
+
+                if (element.hasClass('pdf')) {
+                    var data = "id=" + meid;
+                    var url = '@Url.Action("GetPdfLink")';
+
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        data: data,
+                        success: function (data2) {
+                            var extlink = data2;
+                            //console.log(extlink);
+                           // $(this).find('#continue').attr('href', extlink);
+                            element2.find('#continue').attr('href', extlink);
+                        }
+                    });
+                } else {
+                 //   $(this).find('#continue').attr('href', wlocation);   element2.find('#continue').attr('href', extlink);
+                    element2.find('#continue').attr('href', wlocation);
+                }
+            });
+        });
+
+
+        $('.form-page-edit').submit(function (e) {
+
+            var checker = 0;
+
+            $('.acc-title').each(function (e) {
+
+                if ($(this).val() == null) {
+                    checker++;
+                }
+
+            });
+            if (checker > 0) {
+                alert('An empty Title was detected, remove this section if not needed');
+                return false;
+            }
+
+
+        });
+
+
+
+
+    </script>
+
+
+
+    <!-- Quick Link Section-->
+
+    <div class="modal fade modal-redirect" id="modalpdf" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $('#pdfdiv').on('click', function (e) {
+
+            $('#pdfdiv2').toggle();
+        });
+
+        function copyToClipboard(elementId) {
+
+            // Create a "hidden" input
+            var aux = document.createElement("input");
+
+            // Assign it the value of the specified element
+            aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+
+            // Append it to the body
+            document.body.appendChild(aux);
+
+            // Highlight its content
+            aux.select();
+
+            // Copy the highlighted text
+            document.execCommand("copy");
+
+            // Remove it from the body
+            document.body.removeChild(aux);
+        }
+
+        //-----------  home page animation trial js
+
+        $('#rem1').change(function () {
+            var value = $(this).val();
+            var url = ROOT + 'Menugroups/UpSlide';
+
+           // alert(value);
+
+           //   url = "@Url.Action("Update")";
+            //console.log(url);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data:"a=" + value,
+                success: function (data) {
+                    alert("Saved")
+                },
+                error: function () {
+                    alert("There is some problem in the service!")
+                }
+            });
+
+        });
+
+          $('#rem2').change(function () {
+            var value = $(this).val();
+            var url = ROOT + 'Menugroups/UpSlide';
+
+           // alert(value);
+
+           //   url = "@Url.Action("Update")";
+            //console.log(url);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data:"a=" + value,
+                success: function (data) {
+                    alert("Saved")
+                },
+                error: function () {
+                    alert("There is some problem in the service!")
+                }
+            });
+
+          });
+    </script>
+
+    <script>
+        function FooterPercentageBannerColor() {
+            var data2 = $("#ImagePercentageFooter").val();
+            var data = $("#FooterBannerColor").val();
+            var url23 = ROOT + "/Extlinks/FooterPercentageBannerColor";
+            $.ajax({
+                type: "POST",
+                data: { percentage: data2, submitteddata: data },
+                //url: "/sccweb/Extlinks/FooterPercentageBannerColor"
+                //url: buildUrl("/Extlinks/FooterPercentageBannerColor")
+                url: url23
+            })
+        }
+
+        function CompLogoPercent() {
+            var data = $("#ImagePercentage").val();
+            var url23 = ROOT + "/Extlinks/CompLogoPercent";
+            //console.log(url23);
+            $.ajax({
+                type: "POST",
+                data: { percentage: data },
+                //url: "/sccweb/Extlinks/CompLogoPercent"
+                //url: buildUrl("/Extlinks/CompLogoPercent")
+                url: url23
+            })
+        }
+
+        function SideNavLogoPercent() {
+            var data = $("#ImagePercentageSideNav").val();
+            var url23 = ROOT + "/Extlinks/SideNavLogoPercent"
+            $.ajax({
+                type: "POST",
+                data: { percentage: data },
+                //url: "/sccweb/Extlinks/SideNavLogoPercent"
+                //url: buildUrl("/Extlinks/SideNavLogoPercent")
+                url: url23
+            })
+        }
+
+    </script>
+    <!-- script for detecting square logo or rectangular-->
+
+    @{ if (ViewBag.ExtLinkId == 999)
+        {
+            <script>
+                $(document).ready(function () {
+                    var _URL = window.URL || window.webkitURL;
+                    $('#upload').change(function () {
+                        var file = $(this)[0].files[0];
+
+                        img = new Image();
+                        var imgwidth = 0;
+                        var imgheight = 0;
+                        //  var maxwidth = 640;
+                        //   var maxheight = 640;
+                        img.src = _URL.createObjectURL(file);
+                        img.onload = function () {
+                            imgwidth = this.width;
+                            imgheight = this.height;
+
+                            if (imgwidth == imgheight) {
+                                // hide left and right alignment
+                                $('.al-radio-left').hide();
+                                $('.al-radio-right').hide();
+                                $('.al-radio-center').show();
+                                //      alert('Please select center alignment');
+
+                            } else {
+                                // hide center radio button
+                                $('.al-radio-center').hide();
+                                $('.al-radio-left').show();
+                                $('.al-radio-right').show();
+                                //     alert('Please select the left or right alignment');
+
+
+                            }
+                        };
+                        img.onerror = function () {
+                            alert('Error');
+                        }
+
+                    });
+
+
+                });
+            </script>
+
+        }
+    }
+
+    <script>
+        function Expanded(id) {
+            if (id == 1) {
+                $("#pmgAcc-2").removeClass("show");
+                //$("#pmgAcc-2").css({ transition: "max - height 0.2s ease-out" });
+                $("#pmgAcc-880").removeClass("show");
+                $("#pmgAcc-990").removeClass("show");
+            } else if (id == 2) {
+                $("#pmgAcc-1").removeClass("show");
+                $("#pmgAcc-880").removeClass("show");
+                $("#pmgAcc-990").removeClass("show");
+            } else if (id == 880) {
+                $("#pmgAcc-1").removeClass("show");
+                $("#pmgAcc-2").removeClass("show");
+                $("#pmgAcc-990").removeClass("show");
+            } else if (id == 990) {
+                $("#pmgAcc-1").removeClass("show");
+                $("#pmgAcc-880").removeClass("show");
+                $("#pmgAcc-2").removeClass("show");
+            }
+        }
+
+        // new ccode for company logo detect height max of 200px
+
+        var _URL = window.URL;
+        $("#upload").change(function (e) {
+            if ($("#upload").hasClass("clogo")) {   // company logo
+                var file, img;
+                if ((file = this.files[0])) {
+                    img = new Image();
+                    img.onload = function () {
+                        //  alert("Width:" + this.width + "   Height: " + this.height);
+
+                        if (this.height > 300) {
+                            alert('Maximum height for company logo must not exceed 300px!');
+                            $("#clogo_submit").prop("disabled", true);
+                        } else {
+                            $("#clogo_submit").removeAttr('disabled');
+                        }
+
+                    };
+                    img.src = _URL.createObjectURL(file);
+                }
+            }
+            if ($("#upload").hasClass("flogo")) {   // footer logo
+                var file, img;
+                if ((file = this.files[0])) {
+                    img = new Image();
+                    img.onload = function () {
+                        if (this.height > 70) {
+                            alert('Maximum height for footer logo must not exceed 70px!');
+                            $("#clogo_submit").prop("disabled", true);
+                        } else {
+                            $("#clogo_submit").removeAttr('disabled');
+                        }
+
+                    };
+                    img.src = _URL.createObjectURL(file);
+                }
+            }
+            if ($("#upload").hasClass("qlogo")) {   // footer logo
+                var file, img;
+                if ((file = this.files[0])) {
+                    img = new Image();
+                    img.onload = function () {
+                        if (this.height > 100) {
+                            alert('Maximum height for quick links logo must not exceed 100px!');
+                            $("#clogo_submit").prop("disabled", true);
+                        } else {
+                            $("#clogo_submit").removeAttr('disabled');
+                        }
+
+                    };
+                    img.src = _URL.createObjectURL(file);
+                }
+            }
+        });
+
+
+
+
+
+    </script>
+    <script>
+        // Feed Script for Enable and Disable
+        $(document).ready(function () {
+            $('#home').click(function () {   // $('input[type="checkbox"]').click(function () {
+                if ($(this).prop("checked") == true) {
+                    $("#HomeEnb").val("1");
+                }
+                else if ($(this).prop("checked") == false) {
+                    $("#HomeEnb").val("0");
+                }
+            });
+
+            $('#twitter').click(function () {   // $('input[type="checkbox"]').click(function () {
+                if ($(this).prop("checked") == true) {
+                    $("#TwitterEnb").val("1");
+                }
+                else if ($(this).prop("checked") == false) {
+                    $("#TwitterEnb").val("0");
+                }
+            });
+
+        });
+
+    </script>
+
+
+    <div class="modal fade ModalVersion" id="ModalVersion" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title text-center">
+                        PageBuilder Version Log
+                    </p>
+                    <button type="button" class="close cancel" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach (string text in ViewBag.DataFile)
+                    {
+                        <span>@text</span><br />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="roxyCustomPanel2" style="display: none;">
+        <iframe src="~/Scripts/fileman/index.html?integration=ckeditor&txtFieldId=ExLink" style="width:100%;height:100%" frameborder="0">
+        </iframe>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="ApiModalLock">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Lock Content</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input class="form-control" id="lock1" type="text" placeholder="API Password" />
+                    <br />
+                    <button type="button" class="btn btn-secondary lockme">Lock</button>
+
+                </div>
+
+                <!-- Modal footer -->
+                <!--<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="ApiModalUnLock">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Unlock Content</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input class="form-control" id="lock2" type="text" placeholder="API Password" />
+                    <br />
+                    <button type="button" class="btn btn-secondary unlockme">Unlock</button>
+
+                </div>
+
+                <!-- Modal footer -->
+                <!--<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="EnableLock">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Settings</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input class="form-control" id="lock21" type="text" placeholder="API Password" />
+                    <br />
+                    <button type="button" class="btn btn-secondary enlock">Enable Locking</button>
+
+                </div>
+
+                <!-- Modal footer -->
+                <!--<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="DisableLock">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Settings</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input class="form-control" id="lock22" type="text" placeholder="API Password" />
+                    <br />
+                    <button type="button" class="btn btn-secondary dislock">Disable Locking</button>
+
+                </div>
+
+                <!-- Modal footer -->
+                <!--<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="securityModalEdit" tabindex="-1" role="dialog" aria-labelledby="secirutyModalEdit" aria-hidden="true" style="margin-top: 180px;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Access Control</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" name="user_id" id="user_id">
+
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="username" id="usernameEdit" placeholder="Username" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="password" id="inputPasswordEdit" placeholder="Password">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-12 col-form-label">Level 2 Restriction</label>
+                        <span id="emptyListEdit" class="col-sm-12" style="color: red; font-size:10px; padding-left:20px;">*(Level 3 Selection is Empty)</span>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-8">
+                            <select class="form-control" name="area1Edit" id="area1EditId">
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="restriction1Edit" id="restriction1EditOption">
+                                <option value="Full Access">Full Access</option>
+                                <option value="None">None</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group row restrictionLevel3Edit">
+                        <label for="email" class="col-sm-6 col-form-label">Level 3 Restriction</label>
+                    </div>
+                    <div class="form-group row restrictionLevel3Edit">
+
+                        <div class="col-sm-8">
+                            <select class="form-control" name="area2Edit" id="area2EditId" disabled> </select>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="restriction2Edit" id="restriction2EditOption">
+                                <option value="Full Access">Full Access</option>
+                                @*<option value="None">None</option>*@
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary editUserSubmit">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="securityModal" tabindex="-1" role="dialog" aria-labelledby="secirutyModal" aria-hidden="true" style="margin-top: 180px;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Access Control</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" name="user_id" id="user_id">
+
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="username" id="usernameAdd" placeholder="Username" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="password" id="inputPasswordAdd" placeholder="Password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-12 col-form-label">Level 2 Restriction</label>
+                        <span id="emptyList" class="col-sm-12" style="color: red; font-size:10px; padding-left:20px;">*(Level 3 Selection is Empty)</span>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-8">
+                            <select class="form-control" name="area1Add" id="area1AddId">
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="restriction1Add" id="restriction1AddOption">
+                                <option value="Full Access">Full Access</option>
+                                <option value="None">None</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group row restrictionLevel3">
+                        <label for="email" class="col-sm-6 col-form-label">Level 3 Restriction</label>
+                    </div>
+                    <div class="form-group row restrictionLevel3">
+
+                        <div class="col-sm-8">
+                            <select class="form-control" name="area2Add" id="area2AddId" disabled> </select>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="restriction2Add" id="restriction2AddOption">
+                                <option value="Full Access">Full Access</option>
+                                @*<option value="None">None</option>*@
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary addUserSubmit">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="existingModal" class="modal fade" tabindex="-1" role="dialog" style="margin-top: 250px;">
+        <div class="modal-dialog" role="document" style="width: 250px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <p style="color: red; font-size: 16px; text-align: center;">
+                        Username Already Existing.
+                        Please Choose Another
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button style="margin-right: 80px;" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" class="modal" data-dismiss="modal">
+        <div class="loader">
+        </div>
+    </div>
+
+
+    <script>
+        function openCustomRoxy2() {
+            $('#roxyCustomPanel2').dialog({ modal: true, width: 875, height: 600 });
+        }
+        function closeCustomRoxy2() {
+            $('#roxyCustomPanel2').dialog('close');
+        }
+
+        //ADD USER SECURITY
+        $("#restriction1AddOption").change(function () {
+            $('#emptyList').hide();
+            var Area1 = $("#area1AddId").val();
+            var Restriction1 = $(this).val();
+
+            if (Restriction1 == 'Full Access') {
+                $('.restrictionLevel3').hide();
+            }
+            else {
+                GetLevel3List(Area1);
+                $('.restrictionLevel3').show();
+
+                let optionsLength = document.getElementById("area2AddId").options.length;
+
+                //console.log("optionsLength: " + optionsLength);
+
+                if (optionsLength) {
+                    $("#area2AddId").prop("disabled", false);
+                    $("#restriction2AddOption").prop("disabled", false);
+                    $('#emptyList').hide();
+                } else {
+                    $("#area2AddId").prop("disabled", true);
+                    $("#restriction2AddOption").prop("disabled", true);
+                    let element = document.getElementById("restriction1AddOption");
+                    element.value = "Full Access";
+                    $('.restrictionLevel3').hide();
+                    $('#emptyList').show();
+                }
+            }
+        });
+
+        $("#area1AddId").change(function () {
+            $('#emptyList').hide();
+            var Area1 = $(this).val();
+            var Restriction1 = $("#restriction1AddOption").val();
+
+            if (Restriction1 == 'None') {
+                GetLevel3List(Area1);
+
+                let optionsLength = document.getElementById("area2AddId").options.length;
+
+                //console.log("optionsLength: " + optionsLength);
+                if (optionsLength) {
+                    $("#area2AddId").prop("disabled", false);
+                    $("#restriction2AddOption").prop("disabled", false);
+                    $('#emptyList').hide();
+                } else {
+                    $("#area2AddId").prop("disabled", true);
+                    $("#restriction2AddOption").prop("disabled", true);
+                    let element = document.getElementById("restriction1AddOption");
+                    element.value = "Full Access";
+                    $('.restrictionLevel3').hide();
+                    $('#emptyList').show();
+                }
+            }
+
+        });
+
+        $(document).ready(function () {
+            var Restriction1 = $("#restriction1AddOption").val();
+
+            if (Restriction1 == 'Full Access') {
+                $('.restrictionLevel3').hide();
+            }
+            else {
+                $('.restrictionLevel3').show();
+            }
+        })
+
+        //EDIT USER SECURITY
+        $("#restriction1EditOption").change(function () {
+            $('#emptyListEdit').hide();
+            var Area1 = $("#area1EditId").val();
+            var Restriction1 = $(this).val();
+
+            if (Restriction1 == 'Full Access') {
+                $('.restrictionLevel3Edit').hide();
+            }
+            else {
+                GetLevel3ListEdit(Area1);
+                $('.restrictionLevel3Edit').show();
+
+                let optionsLength = document.getElementById("area2EditId").options.length;
+
+                //console.log("optionsLength: " + optionsLength);
+
+                if (optionsLength) {
+                    $("#area2EditId").prop("disabled", false);
+                    $("#restriction2EditOption").prop("disabled", false);
+                    $('#emptyListEdit').hide();
+                } else {
+                    $("#area2EditId").prop("disabled", true);
+                    $("#restriction2EditOption").prop("disabled", true);
+                    let element = document.getElementById("restriction1EditOption");
+                    element.value = "Full Access";
+                    $('.restrictionLevel3Edit').hide();
+                    $('#emptyListEdit').show();
+                }
+            }
+        });
+
+        $("#area1EditId").change(function () {
+            $('#emptyListEdit').hide();
+            var Area1 = $(this).val();
+            var Restriction1 = $("#restriction1EditOption").val();
+
+            if (Restriction1 == 'None') {
+                GetLevel3ListEdit(Area1);
+
+                let optionsLength = document.getElementById("area2EditId").options.length;
+
+                //console.log("optionsLength: " + optionsLength);
+                if (optionsLength) {
+                    $("#area2EditId").prop("disabled", false);
+                    $("#restriction2EditOption").prop("disabled", false);
+                    $('#emptyListEdit').hide();
+                } else {
+                    $("#area2EditId").prop("disabled", true);
+                    $("#restriction2EditOption").prop("disabled", true);
+                    let element = document.getElementById("restriction1EditOption");
+                    element.value = "Full Access";
+                    $('.restrictionLevel3Edit').hide();
+                    $('#emptyListEdit').show();
+                }
+            }
+        });
+
+        //$(document).ready(function () {
+        //    var Restriction1Edit = $("#restriction1EditOption").val();
+
+        //    if (Restriction1Edit == 'Full Access') {
+        //        $('.restrictionLevel3Edit').hide();
+        //    }
+        //    else {
+        //        $('.restrictionLevel3Edit').show();
+        //    }
+        //})
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script>
+
+        var domain = window.location.href.toLowerCase();
+
+        if (domain.includes('?')) {
+            domain = domain.split('?')[0];
+        }
+
+        function GetSecurityList() {
+            $('#securityFeature').html('');
+
+            var formData = new FormData();
+
+            //  let api = window.location.href.toLowerCase() + "/GetSecurityList";
+            let api = domain + "/GetSecurityList";
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    var userList = response.userList;
+                    var html = '';
+
+                    html += `
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr style="background-color: #313570;color:white">
+                                                                    <th scope="col" colspan="2">PageBuilder Security</th>
+                                                                    <th scope="col" colspan="2">Level 2</th>
+                                                                    <th scope="col" colspan="2">Level 3</th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="col">Id</th>
+                                                                    <th scope="col">Username</th>
+                                                                    <th scope="col">Area</th>
+                                                                    <th scope="col">Access</th>
+                                                                    <th scope="col">Area</th>
+                                                                    <th scope="col">Access</th>
+                                                                    <th scope="col">Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                        <tbody>`;
+
+
+                    var rows = '';
+
+                    for (var m = 0; m < userList.length; m++) {
+
+                        rows += `<tr><th scope="row">` + userList[m].Id + '</th>';
+                        rows += '<td><span>' + userList[m].Username + '</span></td>';
+
+                        rows += '<td><span>' + userList[m].Area1.split(',')[0] + '</span></td>';
+                        rows += '<td><span>' + userList[m].Restriction1 + '</span></td>';
+
+                        if (userList[m].Restriction1 != "Full Access") {
+                            rows += '<td><span>' + userList[m].Area2.split(',')[0] + '</span></td>';
+                            rows += '<td><span>' + userList[m].Restriction2 + '</span></td>';
+                        }
+                        else {
+                            rows += '<td></td>';
+                            rows += '<td></td>';
+                        }
+
+
+                        rows += `<td>
+                                                    <div class="row">
+                                                        <div>
+                                                            <button id="` + userList[m].Id + `" class="btn btn-success btn-sm btn_user securityEdit" data-toggle="modal" data-target="#securityModalEdit" style="margin-right: 5px;"><i class="fa fa-pencil pn38" aria-hidden="true"></i></button>
+                                                        </div>
+                                                        <div>
+                                                            <button id="` + userList[m].Id + `" class="btn btn-danger btn-sm securityDelete"><i class="fa fa-trash-o to26" aria-hidden="true"></i></button>
+                                                        </div>
+                                                    </div></td>`;
+
+                        rows += '</tr>';
+                    };
+
+                    html += rows;
+
+                    html += `</tbody></table>`;
+
+                    html += `<hr/>
+                                                        <div class="row">
+                                                            <div class="col-12 text-right">
+                                                                <button class="btn btn-success btn-sm securityAdd" data-toggle="modal" data-target="#securityModal">Add New</button>
+                                                            </div>
+                                                        </div>`;
+
+                    $('#securityFeature').append(html);
+
+                }
+            });
+        }
+
+        function hideLoader() {
+            setTimeout(() => {
+                $('#loading').modal('hide');
+            }, 500)
+        }
+
+        $('body').on('click', '.securityEdit', function () {
+            var ele = $(this).attr('id');
+            $('#emptyListEdit').hide();
+
+            $('#usernameEdit').val('');
+            $('#inputPasswordEdit').val('');
+            $('#area1EditId').val('');
+            $('#restriction1EditOption').val('');
+            $('#area2EditId').val('');
+            $('#restriction2EditOption').val('');
+
+            GetLevel2ListEdit();
+            GetAccount(ele);
+        });
+
+        $('body').on('click', '.securityAdd', function () {
+            $('#emptyList').hide();
+
+            $('#usernameAdd').val('');
+            $('#inputPasswordAdd').val('');
+            $('#area1AddId').val('');
+            let element = document.getElementById("restriction1AddOption");
+            element.value = "Full Access";
+            $("#area2AddId").prop("disabled", true);
+            $("#restriction2AddOption").prop("disabled", true);
+            $('.restrictionLevel3').hide();
+            $('#area2AddId').val('');
+            $('#restriction2AddOption').val('');
+
+            GetLevel2List();
+        });
+
+        $('body').on('click', '.securityDelete', function () {
+            var ele = $(this).attr('id');
+            DeleteSecurityAccount(ele);
+        });
+
+        $('body').on('click', '.addUserSubmit', function () {
+            CreateSecurityAccount();
+        });
+
+        $('body').on('click', '.editUserSubmit', function () {
+            UpdateSecurityAccount();
+        });
+
+        function DeleteSecurityAccount(account_id) {
+            $('#loading').modal('show');
+            var formData = new FormData();
+            formData.append("account_id", account_id);
+            // let api = window.location.href.toLowerCase() + "/DeleteSecurityAccount";
+            let api = domain + "/DeleteSecurityAccount";
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    $('#securityTest').html('');
+                    GetSecurityList();
+                    hideLoader();
+                }
+            });
+
+
+        }
+
+        function CreateSecurityAccount() {
+            $('#loading').modal('show');
+
+            var formData = new FormData();
+
+            var key = CryptoJS.enc.Utf8.parse('8080808080808080');
+            var iv = CryptoJS.enc.Utf8.parse('8080808080808080');
+
+            var encryptedPassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse($("#inputPasswordAdd").val()), key,
+                { keySize: 128 / 8, iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+
+            formData.append("username", $("#usernameAdd").val());
+            formData.append("password", encryptedPassword);
+            formData.append("area1", $("#area1AddId").val());
+            formData.append("restriction1", $("#restriction1AddOption").val());
+            formData.append("area2", $("#area2AddId").val());
+            formData.append("restriction2", $("#restriction2AddOption").val());
+            // let api = window.location.href.toLowerCase() + "/CreateSecurityAccount";
+            let api = domain + "/CreateSecurityAccount";
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    let message = response.message;
+                    if (message == "Account Already Existing") {
+                        $('#existingModal').modal('show');
+                    }
+                    else {
+                        $('#securityTest').html('');
+                        GetSecurityList();
+                        $('#securityModal').modal('hide');
+                    }
+
+                    hideLoader();
+                }
+            });
+        }
+
+        function GetAccount(account_id) {
+            var formData = new FormData();
+            formData.append("account_id", account_id);
+            // let api = window.location.href.toLowerCase() + "/GetAccount";
+            let api = domain + "/GetAccount";
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    var User = response.User;
+
+                    document.getElementById("usernameEdit").value = User.Username;
+
+                    let element = document.getElementById("area1EditId");
+                    element.value = User.Area1;
+
+                    element = document.getElementById("restriction1EditOption");
+                    element.value = User.Restriction1;
+
+                    if (User.Restriction1 != "Full Access") {
+                        $("#restriction2EditOption").prop("disabled", false);
+                        $("#area2EditId").prop("disabled", false);
+                        GetLevel3ListEdit(User.Area1);
+
+                        element = document.getElementById("area2EditId");
+                        element.value = User.Area2;
+
+                        element = document.getElementById("restriction2EditOption");
+                        element.value = User.Restriction2;
+
+                    } else {
+                        $("#restriction2EditOption").prop("disabled", true);
+                        $("#area2EditId").prop("disabled", true);
+                        $('.restrictionLevel3Edit').hide();
+                    }
+                }
+            });
+        }
+
+        function UpdateSecurityAccount() {
+            $('#loading').modal('show');
+
+            var formData = new FormData();
+
+            if ($("#inputPasswordEdit").val() != "") {
+
+                var key = CryptoJS.enc.Utf8.parse('8080808080808080');
+                var iv = CryptoJS.enc.Utf8.parse('8080808080808080');
+
+                var encryptedPassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse($("#inputPasswordEdit").val()), key,
+                    { keySize: 128 / 8, iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+
+                formData.append("password", encryptedPassword);
+            } else {
+                formData.append("password", "");
+            }
+
+            formData.append("username", $("#usernameEdit").val());
+            formData.append("area1", $("#area1EditId").val());
+            formData.append("restriction1", $("#restriction1EditOption").val());
+            formData.append("area2", $("#area2EditId").val());
+            formData.append("restriction2", $("#restriction2EditOption").val());
+            //  let api = window.location.href.toLowerCase() + "/UpdateSecurityAccount";
+            let api = domain + "/UpdateSecurityAccount";
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    GetSecurityList();
+                    $('#securityModalEdit').modal('hide');
+                    hideLoader();
+                }
+            });
+        }
+
+
+
+        function GetLevel2List() {
+            $('#area1AddId').html('');
+
+            var formData = new FormData();
+            //   let api = window.location.href.toLowerCase() + "/GetLevel2List";
+            let api = domain + "/GetLevel2List";
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                async: false,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    var menuGroups = response.menuGroups;
+
+                    var rows = '';
+
+                    for (var m = 0; m < menuGroups.length; m++) {
+                        rows += `<option value="` + menuGroups[m].Name + ',' + menuGroups[m].Id + `">` + menuGroups[m].Name + `</option>`;
+                    };
+
+                    $('#area1AddId').append(rows);
+                }
+            });
+        }
+
+
+        function GetLevel3List(parent_id) {
+            $('#area2AddId').html('');
+
+            var formData = new FormData();
+            formData.append("parent_id", parent_id.split(",")[1]);
+            // let api = window.location.href.toLowerCase() + "/GetLevel3List";
+
+            let api = domain + "/GetLevel3List";
+
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                async: false,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    var menuGroups = response.menuGroups;
+
+                    var rows = '';
+
+                    for (var m = 0; m < menuGroups.length; m++) {
+                        rows += `<option value="` + menuGroups[m].Name + ',' + menuGroups[m].Id + `">` + menuGroups[m].Name + `</option>`;
+                    };
+
+                    $('#area2AddId').append(rows);
+                }
+            });
+        }
+
+        function GetLevel2ListEdit() {
+            $('#area1EditId').html('');
+
+            var formData = new FormData();
+            //  let api = window.location.href.toLowerCase() + "/GetLevel2List";
+
+            let api = domain + "/GetLevel2List";
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                async: false,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    var menuGroups = response.menuGroups;
+
+                    var rows = '';
+
+                    for (var m = 0; m < menuGroups.length; m++) {
+                        rows += `<option value="` + menuGroups[m].Name + ',' + menuGroups[m].Id + `">` + menuGroups[m].Name + `</option>`;
+                    };
+
+                    $('#area1EditId').append(rows);
+                }
+            });
+        }
+
+
+        function GetLevel3ListEdit(parent_id) {
+            $('#area2EditId').html('');
+
+            var formData = new FormData();
+            formData.append("parent_id", parent_id.split(",")[1]);
+            // let api = window.location.href.toLowerCase() + "/GetLevel3List";
+            let api = domain + "/GetLevel3List";
+
+            $.ajax({
+                type: "POST",
+                url: api,
+                async: false,
+                cache: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                data: formData,
+                complete: function (res) {
+                },
+                success: function (response) {
+                    var menuGroups = response.menuGroups;
+
+                    var rows = '';
+
+                    for (var m = 0; m < menuGroups.length; m++) {
+                        rows += `<option value="` + menuGroups[m].Name + ',' + menuGroups[m].Id + `">` + menuGroups[m].Name + `</option>`;
+                    };
+
+                    $('#area2EditId').append(rows);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            GetSecurityList();
+        })
+
+        // new area for modal
+        $(document).on('click', '.btnAddSubPage', function () {   // $('.btnAddSubPage').click(function () {
+            $("#AddSubMenuItem #SubContentAdmin").show();
+            $("#AddSubMenuItem .content-body").children('.content-collapse').removeClass('show');   // code for close button
+
+            var menuId = $(this).data('menuid'),
+                menucollapseid = $(this).data('menucollapseid'),
+                modal = $(this).data('modalmenu'),
+                qlsubhome = $(this).data('quicklinks');
+
+            menucollapseidArray = menucollapseid.toString().split("I");
+
+            if (menucollapseidArray.length < 3) {
+                $("#AddSubMenuItem #SubHomeEnable").show();
+            } else {
+                $("#AddSubMenuItem #SubHomeEnable").hide();
+            }
+
+            var get_h4_text = $(this).closest('ul').prev().find("h4").text();
+
+            var get_pid = $(this).closest('ul').prev().closest('li').data('parentid');
+
+            //console.log(get_h4_text);
+            //console.log(get_pid);
+
+            $('#AddSubMenuItem').find('.submenuid').val(menuId);
+            $('#AddSubMenuItem').find('.submenuparent').val(menuId);
+            $('#AddSubMenuItem').find('.menucollapseid').val(menucollapseid);
+            $('#AddSubModalItemLocation').find('.submenuid').val(menuId);
+            $('#AddSubModalItemLocation').find('.submenuparent').val(menuId);
+            $('#AddSubModalItemLocation').find('.menucollapseid').val(menucollapseid);
+            $('#AddSubModalItemContact').find('.submenuid').val(menuId);
+            $('#AddSubModalItemContact').find('.submenuparent').val(menuId);
+            $('#AddSubModalItemContact').find('.menucollapseid').val(menucollapseid);
+
+
+            if (modal == 1) {
+                $('#AddSubMenuItem .admin-bl-modal').show();
+            } else {
+                $('#AddSubMenuItem .admin-bl-modal').hide();
+            }
+
+            //console.log("qlsubhome : " + qlsubhome);
+            //console.log("menuid : " + menuId);
+
+            if ((menuId == 1) || (qlsubhome == 1)) {
+                $('#AddSubMenuItem .menu-quick-links').show();
+                $('#AddSubMenuItem .menu-default').hide();
+                $('#AddSubMenuItem .form-img').hide();
+                $('#AddSubMenuItem .mq').hide();
+            } else {
+                $('#AddSubMenuItem .menu-quick-links').hide();
+                $('#AddSubMenuItem .menu-default').show();
+                $('#AddSubMenuItem .form-img').show();
+                $('#AddSubMenuItem .mq').show();
+            }
+
+            if (get_pid == 2) {
+                $('#AddSubMenuItem .sh').show();
+            } else {
+                $('#AddSubMenuItem .sh').hide();
+            }
+
+            if ($(this).data('target') !== "#AddSubModalItemContact" && $(this).data('target') !== "#AddSubModalItemLocation")
+                $("#AddSubMenuItem").modal("show");
+
+        });
+
+        $(document).on('click', '#AddSubMenuItem .content-collapse .collapse-slide', function () {
+            $("#AddSubMenuItem #SubContentAdmin").show();
+            $("#AddSubMenuItem .content-body").children('.content-collapse').removeClass('show');
+        });
+
+
+    </script>
+</body>
+</html>

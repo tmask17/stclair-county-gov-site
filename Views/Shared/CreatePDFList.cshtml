@@ -1,0 +1,80 @@
+﻿<div class="modal fade" id="AddNewPDFList" tabindex="-1" role="dialog" aria-labelledby="addMenuChild" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="MenuItemChild">All PDF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" style="overflow:scroll; height:600px">
+                    <table class="table page page-main table-striped table-bordered table-sm">
+                        <tbody>
+                            <tr>
+                                <th style="width:50px"></th>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    File Name
+                                </th>
+                                @*<th>
+                                    Link
+                                </th>*@
+                                @*<th></th>*@
+                            </tr>
+
+                            @foreach (var item in ViewBag.PdfItemListsWithFileName as List<pagebuilder.ViewModel.PdfViewModel>)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.FileName))
+                                        {
+
+                                            <button id="btnSelectPDFLink" class="btnSelectPDFLink" data-title="@item.Title" data-link="@Url.Content("~/Content/PdfFiles/")@Html.DisplayFor(modelItem => item.FileName)">Select</button>
+                                        }
+                                        else
+                                        {
+                                            <button id="btnSelectPDFLink" data-title="@item.Title" data-link="@Html.DisplayFor(modelItem => item.ExLink)">Select</button>
+                                        }                                        
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FileName)
+                                    </td>
+                                    <!--   <td>
+                                        <img src="~/Pdfs/RetrieveImage/@item.Id" alt="" width=200 />
+                                    </td> -->
+                                    @*<td>
+                                        @if (!string.IsNullOrEmpty(item.FileName))
+                                        {
+
+                                            <p id="p_@item.Id">@Url.Content("~/Content/PdfFiles/")@Html.DisplayFor(modelItem => item.FileName)</p>
+                                        }
+                                        else
+                                        {
+                                            <p id="p_@item.Id">@Html.DisplayFor(modelItem => item.ExLink)</p>
+                                        }
+
+                                    </td>*@
+                                    @*<td>
+                                            <div class="actions text-right">
+
+                                                <a href="@Url.Action("Delete", new { id = item.Id })" class="ai ai-trash btn btn-danger">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+
+                                        </td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

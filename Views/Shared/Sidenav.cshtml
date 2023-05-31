@@ -1,0 +1,278 @@
+﻿<!-- Side Navigation -->
+<style>
+
+    .site-brand {
+        border-radius: 0;
+        background-size: contain;
+        background-position: left;
+    }
+
+    .brand-toggle {
+        padding-top: -38px;
+    }
+
+    .sidebar-nav {
+        /*height:100%;*/
+        height: 85%;
+        padding-top: @ViewBag.SideNavTopOffsetSideNav;
+    }
+
+    .sidebar {
+         padding-top:60px;
+    }
+
+    @@media (max-width: 767.98px) {
+        .sidebar {
+          padding-top:60px;
+        }
+    }
+
+    @@media (max-width: 575.98px) {
+        .sidebar {
+           padding-top:60px;
+        }
+    }
+
+    @@media (max-width: 519px) {
+        .sidebar {
+            padding-top: 40px;
+        }
+    }
+    @@media (max-width: 516px) {
+        .sidebar {
+            padding-top: 52px;
+        }
+    }
+
+    @@media (max-width: 500px) {
+        .sidebar {
+            padding-top: 52px;
+        }
+    }
+
+	#sideNavLogo { max-height:100px;}
+
+    #sideNavLogo1 {
+      width: @ViewBag.SideNavLogoWStr;
+	  height: @ViewBag.SideNavLogoHStr;
+
+    }
+
+    @@media (max-width: 767.98px) {
+        .sidebar-toggle.btn {
+            right: 21px;
+        }
+    }
+
+    @@media (max-width: 575.98px) {
+        .sidebar-toggle.btn {
+            right: 16px;
+        }
+    }
+
+    @@media (max-width: 500px) {
+        .sidebar-toggle.btn {
+            right: 16px;
+        }
+    }
+
+    .sidebar .navbar:after{
+        width: 100%;
+        height: 70px;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        bottom: auto;
+        left: 0;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+        background: #d4dae3;
+        content: '';
+        display: block;
+    }
+
+</style>
+<nav class="sidebar">
+    <div class="sidebar-header">
+
+        <nav class="navbar navbar-light navbar-expand-md" style="background: rgba(0,0,0,0.2);max-height: 90px;position: relative;left: 0;width: 100%;">
+            <div class="container-fluid">
+                @foreach (var fItem in ViewBag.MenuHeaderItems)
+                {
+                    if (fItem.Name == "Quick Links Logo")
+                    {
+                        foreach (var LogoItem in ViewBag.ExLinkItems)
+                        {
+                            if (fItem.ExtlinkId == LogoItem.Id)
+                            {
+                                int LinkExternal = 0;
+                                var LinkId = LogoItem.Title.Replace(" ", "");
+                                var ClassName = LinkId.ToLower();
+
+                                if (LogoItem.IsExternal != null && LogoItem.IsExternal == 1)
+                                {
+                                    LinkExternal = LogoItem.IsExternal;
+                                }
+
+                                var yourStyle = "";
+                                if (((int)ViewBag.SideNavLogoWidth + 5) > ((int)ViewBag.SideNavLogoHeight))
+                                {
+                                    yourStyle = "sideNavLogo1";
+                                }
+                                else
+                                {
+                                    yourStyle = "sideNavLogo";
+                                }
+                                if (((int)ViewBag.SideNavLogoWidth) == ((int)ViewBag.SideNavLogoHeight))
+                                {
+                                    yourStyle = "sideNavLogo";
+                                }
+
+                                <div @*id="@LinkId"*@ id="@yourStyle" class="@(LogoItem.Icon == null ? "bg-img site-brand" : "sli sli-" + ClassName)" href="~/" @(LogoItem.Icon == null ? "data-target=.image-bg" : "") data-external="@LinkExternal" alt="@LogoItem.Title">
+
+                                    @if (LogoItem.Icon != null)
+                                    {
+                                        <i class="fa @LogoItem.Icon"></i>;
+                                    }
+                                    else
+                                    {
+                                        <img Id="imgNav" class="image-bg" src="~/ExtLinks/LinkImages/@LogoItem.Id" />
+                                    }
+                                </div>
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                <ul class="nav navbar-nav">
+                    <li class="nav-item" style="z-index:10">
+                        <a class="btn btn-primary sidebar-toggle2 btn2 btn-toggle no-transition navbar_btn " role="button" id="quickLinksButton" data-toggle="expanded" data-target=".sidebar">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="sidebar-nav">
+        <ul class="nav">
+            @foreach (var MenuItems in ViewBag.SubMenus)
+            {
+                if (MenuItems.Id == 1)
+                {
+                    foreach (var MenuLists in ViewBag.SubMenus)
+                    {
+                        if (MenuItems.Id == MenuLists.ParentId)
+                        {
+                            if (MenuLists.Type == 1)
+                            {
+                                foreach (var PageItem in ViewBag.PageItems)
+                                {
+                                    if (MenuLists.PageId == PageItem.Id && PageItem.Publish == 1)
+                                    {
+                                        <li>
+                                            <a href="~/Offices/@PageItem.Id">
+                                                <span class="bg-img ico-img" data-target=".image-bg">
+                                                    <img class="image-bg" src="~/Pages/PageImages/@PageItem.Id" style="width:100%" />
+                                                </span>
+                                                <span>@PageItem.Title</span>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            }
+                            else if (MenuLists.Type == 2)
+                            {
+                                foreach (var PdfItem in ViewBag.PdfItems)
+                                {
+                                    if (MenuLists.PdfId == PdfItem.Id && PdfItem.Publish == 1)
+                                    {
+                                        int PdfExternal = 0;
+                                        var PdfImg = "";
+                                        if (PdfItem.Img != null)
+                                        {
+                                            PdfImg = Convert.ToBase64String(PdfItem.Img);
+                                        }
+
+                                        if (PdfItem.IsExternal != null && PdfItem.IsExternal == 1)
+                                        {
+                                            PdfExternal = PdfItem.IsExternal;
+                                        }
+
+                                        <li class="@(PdfImg == "" ? "noImg": "")">
+
+                                            @if (PdfExternal == 1)
+                                            {
+                                                <a href="~/Offices/@PdfItem.Id" data-external="@PdfExternal" class="pdf" data-pdfid="@PdfItem.Id" @(PdfExternal == 0 ? "target='_blank'" : null)>
+                                                    @if (PdfImg != "")
+                                                    {
+                                                        <span class="bg-img ico-img" data-target=".image-bg">
+                                                            <img class="image-bg" src="~/Pdf/PdfImages/@PdfItem.Id" style="width:100%" />
+                                                        </span>
+                                                    }
+                                                    <span>@PdfItem.Title</span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@PdfItem.ExLink" data-external="@PdfExternal" @(PdfExternal == 0 ? "target='_blank'" : null) class="pdf" data-pdfid="@PdfItem.Id">
+                                                    @if (PdfImg != "")
+                                                    {
+                                                        <span class="bg-img ico-img" data-target=".image-bg">
+                                                            <img class="image-bg" src="~/Pdf/PdfImages/@PdfItem.Id" style="width:100%" />
+                                                        </span>
+                                                    }
+                                                    <span>@PdfItem.Title</span>
+                                                </a>
+                                            }
+                                        </li>
+                                    }
+                                }
+                            }
+                            else if (MenuLists.Type == 3)
+                            {
+                                foreach (var LinkItem in ViewBag.ExLinkItems)
+                                {
+                                    if (MenuLists.ExtlinkId == LinkItem.Id)
+                                    {
+                                        int LinkExternal = 0;
+                                        var LinkImg = "";
+
+                                        if (LinkItem.Img != null)
+                                        {
+                                            LinkImg = Convert.ToBase64String(LinkItem.Img);
+                                        }
+
+                                        if (LinkItem.IsExternal != null && LinkItem.IsExternal == 1)
+                                        {
+                                            LinkExternal = LinkItem.IsExternal;
+                                        }
+
+                                        <li class="@(LinkImg == "" ? "noImg": "")">
+                                            <a href="@LinkItem.UrlLink" data-external="@LinkExternal">
+                                                @if (LinkImg != "")
+                                                {
+                                                    <span class="bg-img ico-img" data-target=".image-bg">
+                                                        <img class="image-bg" src="~/Extlinks/LinkImages/@LinkItem.Id" style="width:100%" />
+                                                    </span>
+                                                }
+
+                                                <span>@LinkItem.Title</span>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        </ul>
+    </div>
+</nav>
+<div class="sidebar-overlay"></div>
+<!-- End Side Navigation -->

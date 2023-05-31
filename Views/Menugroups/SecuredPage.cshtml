@@ -1,0 +1,111 @@
+﻿@model pagebuilder.ViewModel.MenugroupViewModel
+@{ ViewBag.Title = "Menu Groups";
+    var menuId = 0;
+    var si = 0;
+    var ssi = 0;
+    var sssi = 0;
+    var ssssi = 0;
+    var sssssi = 0;
+    var mci = 0;
+    var fi = 0;
+    var li = 0;
+    var ci = 0;
+    var sc = 0;
+    Layout = "~/Views/Shared/_LayoutAdminSecured.cshtml";
+}
+
+
+@RenderPage("../Shared/PanelMenu.cshtml")
+
+<style>
+    /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 33px;
+        height: 21px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 13px;
+            width: 13px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(13px);
+        -ms-transform: translateX(13px);
+        transform: translateX(13px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+
+<div class="panel panel-body">
+    <div class="row" style="display: none;">
+        <div class="col-8">
+            <h2>Menu Groups</h2>
+        </div>
+        <div class="col-4 text-right">
+           
+        </div>
+    </div>
+    <hr />
+    <div class="page page-mg">
+        <div class="row">
+               <h2>You are trying to access a secured content. Contact your Administrator to unlock this page.</h2>
+        </div>
+        <!-- Modal Add SubMenu Item-->
+   
+       
+     
+
+        <!-- Modal Add SubMenu Item-->
+
+     
+    </div>
+</div>
+
+

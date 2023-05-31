@@ -1,0 +1,668 @@
+﻿@model pagebuilder.Model.Modal
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var vi = 0;
+    var phone = @Html.DisplayFor(model => model.Phone).ToString();
+    var email = @Html.DisplayFor(model => model.Email).ToString();
+    var title = @Html.DisplayFor(model => model.Title).ToString();
+}
+@RenderPage("../Shared/PanelMenu.cshtml")
+<div class="panel panel-body page-edit ">
+    @using (Html.BeginForm("Edit", "Modals", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-page form-modal-edit" }))
+    {
+        <input id="menucollapse" type="hidden" name="menucollapse" value="@Request.QueryString["menucollapse"]" />
+        @Html.AntiForgeryToken()
+
+        if (phone != "")
+        {
+            <input id="ImgNull" type="hidden" name="imgnull" value="3" />
+            <div class="form-horizontal">
+                <div class="row form-header">
+                    <div class="col-sm-6">
+                        <h4>Edit Contact</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+                <hr />
+                <div class="row form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group form-group-phone">
+                    <label class="control-label col-md-2">Phone</label>
+                    <div class="col-md-10">
+                        <div class="phone-group">
+                            @if (ViewBag.PhonePrimary != null)
+                            {
+                                <div class="row pg pg-item">
+                                    @foreach (var item in ViewBag.PhonePrimary)
+                                    {
+                                        <div class="pg-col">
+                                            <input type="text" class="form-control" name="ConcactPhone" placeholder="000 000 0000" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.PhoneSecondary != null)
+                            {
+                                var pi = 0;
+
+                                <div class="row pg pg-item">
+                                    @foreach (var item in ViewBag.PhoneSecondary)
+                                    {
+                                        pi++;
+                                        <div class="pg-col">
+                                            @if (pi == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-phone"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="ConcactPhone" placeholder="000 000 0000" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.PhoneSThird != null)
+                            {
+                                var pi = 0;
+
+                                <div class="row pg pg-item">
+                                    @foreach (var item in ViewBag.PhoneSThird)
+                                    {
+                                        pi++;
+                                        <div class="pg-col">
+                                            @if (pi == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-phone"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="ConcactPhone" placeholder="000 000 0000" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.PhoneSFourth != null)
+                            {
+                                var pi = 0;
+
+                                <div class="row pg pg-item">
+                                    @foreach (var item in ViewBag.PhoneSFourth)
+                                    {
+                                        pi++;
+                                        <div class="pg-col">
+                                            @if (pi == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-phone"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="ConcactPhone" placeholder="000 000 0000" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                        <button type="button" class="btn btn-success btn-sm btn-duplicate-phone">Add Phone</button>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="control-label col-md-2">Hours of Operation</label>
+                    <div class="col-md-10">
+                        <div class="hour-group">
+                            @if (ViewBag.Mon != null)
+                            {
+                                <div class="row hg hg-item">
+                                    @foreach (var item in ViewBag.Mon)
+                                    {
+                                        <div class="hg-col">
+                                            <input type="text" class="form-control" name="LocationHours" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.Tue != null)
+                            {
+                                var ti = 0;
+                                <div class="row hg hg-item">
+                                    @foreach (var item in ViewBag.Tue)
+                                    {
+                                        ti++;
+                                        <div class="hg-col">
+                                            @if (ti == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-time"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="LocationHours" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.Wed != null)
+                            {
+                                var wi = 0;
+                                <div class="row hg hg-item">
+                                    @foreach (var item in ViewBag.Wed)
+                                    {
+                                        wi++;
+                                        <div class="hg-col">
+                                            @if (wi == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-time"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="LocationHours" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.Thu != null)
+                            {
+                                var thi = 0;
+                                <div class="row hg hg-item">
+                                    @foreach (var item in ViewBag.Thu)
+                                    {
+                                        thi++;
+                                        <div class="hg-col">
+                                            @if (thi == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-time"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="LocationHours" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.Fri != null)
+                            {
+                                var fi = 0;
+                                <div class="row hg hg-item">
+                                    @foreach (var item in ViewBag.Fri)
+                                    {
+                                        fi++;
+                                        <div class="hg-col">
+                                            @if (fi == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-time"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="LocationHours" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.Sat != null)
+                            {
+                                var si = 0;
+                                <div class="row hg hg-item">
+                                    @foreach (var item in ViewBag.Sat)
+                                    {
+                                        si++;
+                                        <div class="hg-col">
+                                            @if (si == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-time"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="LocationHours" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            @if (ViewBag.Sun != null)
+                            {
+                                var sui = 0;
+                                <div class="row hg hg-item">
+                                    @foreach (var item in ViewBag.Sun)
+                                    {
+                                        sui++;
+                                        <div class="hg-col">
+                                            @if (sui == 1)
+                                            {
+                                                <button type="button" class="btn btn-danger btn-sm btn-remove-time"><i class="fa fa-times"></i></button>
+                                            }
+                                            <input type="text" class="form-control" name="LocationHours" value="@item" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                        <button type="button" class="btn btn-success btn-sm btn-duplicate-time">Add Hours</button>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="control-label col-md-2">Notes</label>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Maintext, new { @class = "form-control", rows = "4" })
+                        @Html.ValidationMessageFor(model => model.Maintext, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-offset-2 col-md-10 f-control">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+        else if (email != "")
+        {
+            <input id="ImgNull" type="hidden" name="imgnull" value="4" />
+            <div class="form-horizontal">
+                <div class="row form-header">
+                    <div class="col-sm-6">
+                        <h4>Update Email Information</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                            Back to List
+                        </a>
+                    </div>
+                    <input type="hidden" name="TitleEmail" value="Emails" />
+                </div>
+
+                <div class="form-group-email">
+                    <!--
+                    <div class="row form-group form-title">
+                        <div class="col-md-9">
+                            @if (title != "")
+                            {
+                                <input id="modalTitle" type="text" class="form-control" name="modalTitle" placeholder="Company Email Information" value="@(title)" />
+                            }
+                            else
+                            {
+                                <input id="modalTitle" type="text" class="form-control" name="modalTitle" placeholder="Company Email Information" value="" />
+                            }
+
+                        </div>
+                        <div class="col-md-3">
+                            <input id="saveTitle" type="submit" value="Save" class="btn btn-sm btn-success" />
+                        </div>
+                    </div> -->
+                    <hr />
+                    <div class="form-group form-inputs">
+                        @if (ViewBag.Email1 != null)
+                        {
+                            var e1 = 0;
+                            <div class="row fi fi-item">
+                                @foreach (var emailitem in ViewBag.Email1)
+                                {
+                                    e1++;
+
+
+                                    if (e1 == 1)
+                                    {
+                                        int eval = Convert.ToInt32(emailitem);
+                                        <div class="col-md-3 fii-action">
+                                            <input class="enable" type="hidden" name="modalEmails" data-val="@(emailitem)" value="@(emailitem)">
+
+                                            @if (eval == 1)
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa"></i></button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa fa-check"></i></button>
+                                            }
+
+                                        </div>
+                                    }
+                                    else if (e1 == 2)
+                                    {
+                                        <div class="col-md-3 fii fii-label">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Office Label" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6 fii fii-input">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Email address" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                        @if (ViewBag.Email2 != null)
+                        {
+                            var e2 = 0;
+                            <div class="row fi fi-item">
+                                @foreach (var emailitem in ViewBag.Email2)
+                                {
+                                    e2++;
+
+                                    if (e2 == 1)
+                                    {
+                                        int eval = Convert.ToInt32(emailitem);
+                                        <div class="col-md-3 fii-action">
+                                            <input class="enable" type="hidden" name="modalEmails" data-val="@(emailitem)" value="@(emailitem)">
+
+                                            @if (eval == 1)
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa"></i></button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa fa-check"></i></button>
+                                            }
+                                            <button type="button" class="btn btn-default btn-sm btn-remove-email"><i class="fa fa-trash-o"></i></button>
+                                        </div>
+                                    }
+                                    else if (e2 == 2)
+                                    {
+                                        <div class="col-md-3 fii fii-label">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Office Label" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6 fii fii-input">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Email address" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                        @if (ViewBag.Email3 != null)
+                        {
+                            var e3 = 0;
+                            <div class="row fi fi-item">
+
+                                @foreach (var emailitem in ViewBag.Email3)
+                                {
+                                    e3++;
+
+                                    if (e3 == 1)
+                                    {
+                                        int eval = Convert.ToInt32(emailitem);
+                                        <div class="col-md-3 fii-action">
+                                            <input class="enable" type="hidden" name="modalEmails" data-val="@(emailitem)" value="@(emailitem)">
+
+                                            @if (eval == 1)
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa"></i></button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa fa-check"></i></button>
+                                            }
+                                            <button type="button" class="btn btn-default btn-sm btn-remove-email"><i class="fa fa-trash-o"></i></button>
+                                        </div>
+                                    }
+                                    else if (e3 == 2)
+                                    {
+                                        <div class="col-md-3 fii fii-label">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Office Label" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6 fii fii-input">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Email address" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                        @if (ViewBag.Email4 != null)
+                        {
+                            var e4 = 0;
+                            <div class="row fi fi-item">
+                                @foreach (var emailitem in ViewBag.Email4)
+                                {
+                                    e4++;
+
+                                    if (e4 == 1)
+                                    {
+                                        int eval = Convert.ToInt32(emailitem);
+                                        <div class="col-md-3 fii-action">
+                                            <input class="enable" type="hidden" name="modalEmails" data-val="@(emailitem)" value="@(emailitem)">
+
+                                            @if (eval == 1)
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa"></i></button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa fa-check"></i></button>
+                                            }
+                                            <button type="button" class="btn btn-default btn-sm btn-remove-email"><i class="fa fa-trash-o"></i></button>
+                                        </div>
+                                    }
+                                    else if (e4 == 2)
+                                    {
+                                        <div class="col-md-3 fii fii-label">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Office Label" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6 fii fii-input">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Email address" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                        @if (ViewBag.Email5 != null)
+                        {
+                            var e5 = 0;
+                            <div class="row fi fi-item">
+
+                                @foreach (var emailitem in ViewBag.Email5)
+                                {
+                                    e5++;
+
+                                    if (e5 == 1)
+                                    {
+                                        int eval = Convert.ToInt32(emailitem);
+                                        <div class="col-md-3 fii-action">
+                                            <input class="enable" type="hidden" name="modalEmails" data-val="@(emailitem)" value="@(emailitem)">
+
+                                            @if (eval == 1)
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa"></i></button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa fa-check"></i></button>
+                                            }
+                                            <button type="button" class="btn btn-default btn-sm btn-remove-email"><i class="fa fa-trash-o"></i></button>
+                                        </div>
+                                    }
+                                    else if (e5 == 2)
+                                    {
+                                        <div class="col-md-3 fii fii-label">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Office Label" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6 fii fii-input">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Email address" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                        @if (ViewBag.Email6 != null)
+                        {
+                            var e6 = 0;
+                            <div class="row fi fi-item">
+
+                                @foreach (var emailitem in ViewBag.Email6)
+                                {
+                                    e6++;
+
+                                    if (e6 == 1)
+                                    {
+                                        int eval = Convert.ToInt32(emailitem);
+                                        <div class="col-md-3 fii-action">
+                                            <input class="enable" type="hidden" name="modalEmails" data-val="@(emailitem)" value="@(emailitem)">
+
+                                            @if (eval == 1)
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa"></i></button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa fa-check"></i></button>
+                                            }
+                                            <button type="button" class="btn btn-default btn-sm btn-remove-email"><i class="fa fa-trash-o"></i></button>
+                                        </div>
+                                    }
+                                    else if (e6 == 2)
+                                    {
+                                        <div class="col-md-3 fii fii-label">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Office Label" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6 fii fii-input">
+                                            <input type="text" class="form-control" name="modalEmails" placeholder="Email address" data-val="@(emailitem)" value="@(emailitem)" />
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-default btn-sm btn-duplicate-email">Add Email</button>
+                        <input id="saveEmails" type="submit" value="Save" class="btn btn-sm btn-success" />
+                    </div>
+                </div>
+                <hr />
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <h4>Connect to Company Contact System (if available)</h4>
+                    </div>
+                </div>
+                <div class="row form-group form-group-system">
+                    @if (ViewBag.Sysemail != null)
+                    {
+                        var se = 0;
+
+                        foreach (var sysEmail in ViewBag.Sysemail)
+                        {
+                            se++;
+
+                            if (se == 1)
+                            {
+                                <div class="col-md-3 fii-action">
+                                    <input id="SystemEmailEnable" class="enable" type="hidden" name="modalEmails" data-val="@(sysEmail)" value="@(sysEmail)">
+
+                                    @if (sysEmail == "sys_1")
+                                    {
+                                        <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa fa-check"></i></button>
+                                        <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa"></i></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-success btn-sm btn-email-enable" data-val="1">Enable <i class="fa"></i></button>
+                                        <button type="button" class="btn btn-danger btn-sm btn-email-disable" data-val="0">Disable <i class="fa fa-check"></i></button>
+                                    }
+                                </div>
+                            }
+                            else if (se == 2)
+                            {
+                                <div class="col-md-3">
+                                    <input id="SystemEmailTitle" type="text" class="form-control" name="modalEmails" placeholder="Link Title" data-val="@sysEmail" value="@sysEmail" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-6">
+                                    <input id="SystemEmailLink" type="text" class="form-control" name="modalEmails" placeholder="Url" data-val="@sysEmail" value="@sysEmail" />
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <input id="SystemEmail" type="text" class="form-control" name="modalEmails" placeholder="Email address" value="" />
+                    }
+                    <div class="col-md-12 f-control">
+                        <input id="saveSysEmail" type="submit" value="Save" class="btn btn-sm btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <input id="ImgNull" type="hidden" name="imgnull" value="0" /> <!-- value="0"-->
+            <div class="form-horizontal">
+                <div class="row form-header">
+                    <div class="col-sm-6">
+                        <h4>Edit Modal (menu only)</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row form-group form-image">
+                    @Html.Label("Image header", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @if (ViewBag.Img == true)
+                                {
+                                    <div class="fi fi-data-img">
+                                        <span class="fdi fdi-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <img class="fdi fdi-img" src="~/Modals/ModalImages/@Html.DisplayFor(model => model.Id)" alt="" width="250" />
+                                    </div>
+                                    <input type="file" id="upload" name="fileImg" style="display:none;" />
+                                }
+                                else
+                                {
+                                    <input type="file" id="upload" name="fileImg" onchange="fileCheck(this)" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="row form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-offset-2 col-md-10 f-control">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+

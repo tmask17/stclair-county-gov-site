@@ -1,0 +1,39 @@
+﻿#searchForPageButtonsDiv {
+    position: absolute;
+}
+
+/* Styling for Buttons */
+#searchForPageButton {
+    width: 40px;
+}
+
+    #searchForPageButton.no-display {
+        visibility: hidden;
+    }
+
+    /* CSS for removing effects */
+    #searchForPageButton.no-transition {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
+    }
+
+    /* Styling for search icon */
+    #searchForPageButton > i {
+        margin-left: -6px;
+    }
+
+    /* Stylings for moving left search button when quick links icon is present */
+    #searchForPageButton.move-to-right {
+        left: 0px; /*left: -33px;*/
+    }
+
+    #searchForPageButton.move-to-left {
+        left: -83px;
+    }
+
+    /* CSS for adding flex basis */
+    #searchForPageButton.ie-flex-basis {
+        flex-basis: 1%;
+    }

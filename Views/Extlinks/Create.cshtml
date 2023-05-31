@@ -1,0 +1,203 @@
+﻿@model pagebuilder.ViewModel.ExtlinkViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Create";
+}
+@RenderPage("../Shared/PanelMenu.cshtml")
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.css" integrity="sha512-BVeRnUOL0G7d4gXmj+0VxpoiQuEibKQtlkclADKvCdNrESs0LA6+H8s1lU455VqWFtHBfF/pKDGw/CMat2hqOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    .minicolors-input {
+        height: 30px !important;
+    }
+</style>
+
+<div class="panel panel-body panel-link">
+    @using (Html.BeginForm("Create", "Extlinks", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="iconcreate" value="0" />
+
+        <div class="form-horizontal">
+            <div class="row form-header">
+                <div class="col-sm-6">
+                    <h4>Create External Link</h4>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="~/Menugroups/Index" class="f-back btn btn-default btn-sm">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row form-group">
+                @Html.LabelFor(model => model.UrlLink, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UrlLink, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UrlLink, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control datepicker" }, type = "date" })
+                    @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.Label("Image", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" id="uploadImg" name="upload" accept="image/png,image/jpg,image/jpeg" onchange="fileCheck(this)" />
+                </div>
+            </div>
+            <div id="adv-set" class="collapse multi-collapse">
+                <div class="row form-group">
+                    @Html.LabelFor(model => model.Author, "Author", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-offset-2 col-md-10 f-control">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#adv-set" aria-expanded="false" aria-controls="adv-set">Advance</button>
+                </div>
+            </div>
+        </div>
+    }
+    @using (Html.BeginForm("Create", "Extlinks", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-create-icon", @style = "display:none" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="iconcreate" value="1" />
+        <input id="menuparent" type="hidden" name="menuparent" value="1" />
+        <input id="menucollapse" type="hidden" name="menucollapse" value="1" />
+
+        <div class="form-horizontal">
+            <div class="row form-header">
+                <div class="col-sm-6">
+                    <h4>Create Icon</h4>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="~/Menugroups/Index" class="f-back btn btn-default btn-sm">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="control-label col-md-2">Link</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UrlLink, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UrlLink, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Icon, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Icon, new { htmlAttributes = new { @class = "form-control form-control-icon" } })
+                    @Html.ValidationMessageFor(model => model.Icon, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control colorpicker" } })
+                    @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="row form-group">
+
+
+                @Html.LabelFor(model => model.IsExternal, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <span class="pub -yes">
+                        <span class="pl">Yes</span>
+                        @Html.RadioButtonFor(model => model.IsExternal, "1")
+                    </span>
+                    <span class="pub -no">
+                        <span class="pl">No</span>
+                        @Html.RadioButtonFor(model => model.IsExternal, "0", new { @checked = "checked" })
+                    </span>
+                </div>
+            </div>     <!--  </div>  <div class="row form-group">   added code by sir lester   -->
+
+
+            <div class="row form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-offset-2 col-md-10 f-control">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.js" integrity="sha512-vBqPkpOdZM0O7YezzE8xaoUdyt4Z2d+gLrY0AMvmNPLdLuNzvreTopyuaM9/FiRzHs1bwWzYDJgH6STcuNXpqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(".colorpicker").minicolors({
+        letterCase: 'uppercase',
+        defaultValue: '#999999'
+    });
+    $('.minicolors-swatch').hide();
+    function change_color(target) {
+        var found = false;
+        if (~target.indexOf("facebook")) {
+            $(".colorpicker").val("#3b5998")
+            found = true
+        }
+        if (~target.indexOf("google")) {
+            $(".colorpicker").val("#c71610")
+            found = true
+        }
+        if (~target.indexOf("twitter")) {
+            $(".colorpicker").val("#00acee")
+            found = true
+        }
+        if (~target.indexOf("envelope")) {
+            $(".colorpicker").val("#4285F4")
+            found = true
+        }
+        if (~target.indexOf("insta")) {
+            $(".colorpicker").val("#D62976")
+            found = true
+        }
+        if (~target.indexOf("youtube")) {
+            $(".colorpicker").val("#FF0000")
+            found = true
+        }
+        if (!found) {
+            $(".colorpicker").val("#999999")
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $(".form-control-icon").change(function () {
+            var target = $(this).val();
+            change_color(target)
+        });
+    });
+</script>

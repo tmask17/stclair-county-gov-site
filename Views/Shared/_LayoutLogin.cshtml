@@ -1,0 +1,546 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>@pagebuilder.Utils.Common.CompanyName</title>
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.standalone.css" rel="stylesheet" />
+    <link href="~/Content/jquery-customselect-1.9.1.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" href="~/ExtLinks/LinkImages/@ViewBag.Favicon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="~/Content/simple-iconpicker.min.css" rel='stylesheet' type='text/css' />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/Content/sccweb/search-icon.css" />
+
+
+    <style>
+        #enqlink {
+            display: none;
+        }
+
+        #er1, #er2 {
+            color: red;
+        }
+        /*  .carousel-control-prev {
+            margin-left: -68px;
+        }
+
+        .carousel-control-next {
+            margin-right: -68px;
+        } */
+
+        #det {
+            background: rgba(0,0,0,0.4);
+            height: 25vh;
+            position: relative;
+            top: 10%;
+        }
+
+        header .head-content {
+        }
+
+        .animator {
+            padding: 10px 10px;
+        }
+
+        .autoModal.modal .modal-body {
+            padding: 0.5rem;
+        }
+
+
+        /* Smartphones ----------- */
+        @@media only screen and (hover: none) and (pointer: coarse) and (min-width: 1920px) {
+            #det {
+                height: 22vh;
+            }
+
+            .carousel-inner {
+                margin-top: -200px;
+            }
+        }
+
+
+        @@media only screen and (hover: none) and (pointer: coarse) and (min-width: 1024px) {
+            #det {
+                height: 22vh;
+            }
+
+            .carousel-inner {
+                margin-top: -200px;
+            }
+        }
+
+
+
+        @@media only screen and (hover: none) and (pointer: coarse) and (min-width: 768px) {
+            #det {
+                height: 20vh;
+            }
+
+            .carousel-inner {
+                margin-top: -200px;
+            }
+        }
+
+        @@media only screen and (hover: none) and (pointer: coarse) and (min-width: 411px) {
+            #det {
+                height: 20vh;
+            }
+
+            .carousel-inner {
+                margin-top: -130px;
+            }
+        }
+
+
+        /* Smartphones ----------- */
+
+        /* desktops----------- */
+
+        @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 1920px) {
+            #det {
+                height: 20vh;
+            }
+        }
+
+        @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 1366px) {
+            #det {
+                height: 20vh;
+            }
+        }
+
+        @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 1400px) {
+            #det {
+                height: 20vh;
+            }
+        }
+
+        @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 1280px) {
+            #det {
+                height: 20vh;
+            }
+        }
+
+        @@media only screen and (hover: hover) and (pointer: fine) and (min-width: 800px) {
+            #det {
+                height: 20vh;
+            }
+        }
+
+        /* desktops----------- */
+
+
+        @@keyframes fadeIn {
+            20% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            60% {
+                opacity: 0;
+            }
+        }
+    </style>
+    @{ if ((ViewBag.Class != "admin"))
+        { @Html.Raw(ViewBag.FB)
+        @Html.Raw(ViewBag.GA)
+    }
+    }
+</head>
+
+@{
+    var LogoHref = Request.Url.AbsoluteUri.ToString().Split(new string[] { "/Offices" }, StringSplitOptions.None)[0];
+}
+<body class="@ViewBag.Class">
+    <div class="container-fluid body-content">
+
+        <!--
+             <div class="modal fade modal-redirect" id="modalRedirect" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+
+
+                        <p class="modal-title text-center">
+                            <img class="cmp-image" src="~/ExtLinks/LinkImages/@ViewBag.Favicon" /><br /><span class="cmp">You are now leaving</span><span class="cmp">@pagebuilder.Utils.Common.CompanyName</span>
+                        </p>
+                        <button type="button" class="close cancel" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <a href="" class="btn btn-primary btn-sm" id="continue" target="_blank">Continue</a>
+                        <button id="cancel" type="button" class="btn btn-default btn-sm cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            -->
+        <!-- Header -->
+        <header>
+            <!-- End Banner Image -->
+
+        </header>
+        <!-- End Header -->
+        <div class="mainbody">
+            @RenderBody()
+        </div>
+
+        <!-- Footer -->
+        <!-- End Footer -->
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+
+    <script>
+    var ROOT = '@Url.Content("~")';
+    </script>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!--
+         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  -->
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-customselect-1.9.1.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckfinder/ckfinder.js"></script>
+
+    @Scripts.Render("~/bundles/modernizr")
+    <!--    <script>CKEDITOR.replace('textEdit');</script>-->
+    <!--<script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>-->
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>-->
+    <script type='text/javascript' src="~/Scripts/simple-iconpicker.min.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+
+    <script src="~/Scripts/typeahead.bundle.js"></script>
+    <script src="~/Scripts/sccweb/views/pages/detail-page.js"></script>
+    <script src="~/Scripts/sccweb/views/pages/edit-page.js"></script>
+    <script src="~/Scripts/sccweb/functionality/search-for-page.js"></script>
+
+    <!-- Menugroups Script-->
+
+    @{if ((ViewBag.Class == "home"))
+        {
+            <script>
+                var slh = $("#slideshow").height() + 20;
+                console.log("Height of slh: " + slh);
+                // get the height content                 //
+
+                const ch2 = new Array()
+
+                $('.animator').each(function (i, obj) {
+                    //   var sl = $(this).height();
+                    var sl = $(this).innerHeight();
+                    ch2.push(sl);
+                });
+
+                var slh2 = Math.max.apply(Math, ch2);
+                // get the height value
+
+                $("#det").css("height", slh2); // ok
+
+
+                let eltop = document.getElementById("det");
+                let top3 = eltop.getBoundingClientRect().top + eltop.ownerDocument.defaultView.pageYOffset;
+
+                //var mtop = $("#det").innerHeight() * -1;
+                var mtop = ($("#det").innerHeight() * -1) - 10;
+
+                $('#slideshow').css("margin-top", mtop);
+
+                // get width of the slidehow
+
+                var slw = $("#slideshow").width();
+                var nlw = (slw / 3);
+                // arrows
+
+                var mv = slh2 / 2;
+
+                $('.carousel-control-next').css("margin-right", nlw);
+                $('.carousel-control-prev').css("margin-left", nlw);
+
+                $('.carousel-control-next').css("top", slh2);
+                $('.carousel-control-prev').css("top", slh2);
+
+
+            </script>
+        }
+    }
+
+    <script>
+
+        var whichInput = 0;
+
+        $(document).ready(function () {
+            //FORCE FIXING WHITE FOOTER
+            //$('footer').css('color', '#fff');
+            //FORCE FIXING WHITE FOOTER
+
+            $('.form-control-icon').iconpicker('.form-control-icon');
+
+            $('.pmg').sortable({
+                connectWith: '.pmg',
+                placeholder: 'card2',
+
+                //  handle: '.card',
+                update: function (e, ui) {
+
+                    var element = $(this);
+                    var id_string = element.attr("id");
+                    console.log(id_string);
+
+                    var i = 0;
+                    $('#' + id_string + '> li').each(function () {
+
+                        console.log("li: " + $(this).attr("id"));
+
+                        var li_string = $(this).attr("id");
+
+                        var del_id = li_string.split("-");
+                        var parent_id = id_string.split("-");
+
+                        var cid = del_id[1];
+                        var pid = parent_id[1];
+
+                        var info2 = 'id=' + cid + '&sortid=' + i + '&pd=' + pid;
+
+                        var url_sub = ROOT + 'Menugroups/Sort';
+                        console.log(url_sub);
+                        $.ajax({
+                            type: "GET",
+                            url: url_sub,
+                            data: info2,
+                            success: function () {
+                            }
+                        });
+                        //  console.log("i: " +i);
+                        i++;
+                    });
+                }
+
+            });
+            $('.pmg').disableSelection();
+        });
+
+        // Sortable issue solved by sir alistair --> CKEditor missing contents -> fix section
+
+        $(document).ready(function () {
+            $('.pmgE').sortable({
+                connectWith: '.pmgE',
+                placeholder: 'card2',
+                update: function (e, ui) {
+                    for (name in CKEDITOR.instances) {
+                        CKEDITOR.instances[name].destroy(true);
+                    }
+                    ckload();
+                },
+                start: function () {
+                    //for (name in CKEDITOR.instances) {
+                    //    CKEDITOR.instances[name].destroy(true);
+                    //}
+                },
+                stop: function (e, ui) {
+                    for (name in CKEDITOR.instances) {
+                        CKEDITOR.instances[name].destroy(true);
+                    }
+                    ckload();
+                }
+            });
+            $('.pmgE').disableSelection();
+            ckload();
+
+        });
+
+        function ckload() {
+            $('textarea[name="subcontent"]').each(function () {
+                var ck_Id = $(this).attr("id");
+                console.log(ck_Id);
+                CKEDITOR.replace(ck_Id);
+            });
+        }
+
+    </script>
+    <script>
+
+        $(document).ready(function () {
+			$('.CompanyLogo22').attr('href', '@LogoHref');
+
+            $.fn.modal.Constructor.prototype._enforceFocus = function _enforceFocus() {
+                var _this4 = this;
+                $(document).on(Event.FOCUSIN, function (event) {
+                    if (
+                        document !== event.target
+                        && _this4._element !== event.target
+                        && $(_this4._element).has(event.target).length === 0
+                        && !$(event.target.parentNode).hasClass('cke_dialog_ui_input_select')
+                        && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_textarea')
+                        && !$(event.target.parentNode).hasClass('cke_dialog_ui_input_text')
+                    ) {
+                        _this4._element.focus();
+                    }
+                });
+            };
+        });
+
+    </script>
+
+
+    <!-- End Menugroups Script-->
+    <!-- Chat Section-->
+    <!-- Quick Link Section-->
+    <script>
+        $('body').on('click', '#eqlink_1', function () {
+
+            var ele = $(this).attr('id');
+            var idx = ele.split('_');
+
+            if ($(this).hasClass("set") == false) {
+                $(this).addClass("set");
+                $('#enqlink').show(); // feature setting
+
+                console.log("1");
+
+                $('#sortable-1').hide();
+                $('#eqtoggle_' + idx[1]).hide();
+                $('.qblink').hide();
+            } else {
+                $(this).removeClass("set");
+                $('#enqlink').hide();
+                console.log("0");
+                $('#sortable-1').show();
+                $('#eqtoggle_' + idx[1]).show();
+                $('.qblink').show();
+            }
+        });
+
+        //homepage tiles meta keywords
+        $('body').on('click', '.tilecheck', function () {
+
+            var ele = $(this).attr('id');
+            var idx = ele.split('_');
+
+            if ($(this).hasClass("set") == false) {
+                $(this).addClass("set");
+                $('#enqtiles').show(); // feature setting
+
+                console.log("1");
+
+                $('#sortable-' + idx[1]).hide();
+                $('#eqtoggle_' + idx[1]).hide();
+                $('.btnhp').hide();
+
+            } else {
+                $(this).removeClass("set");
+                $('#enqtiles').hide();
+                console.log("0");
+                $('#sortable-' + idx[1]).show();
+                $('#eqtoggle_' + idx[1]).show();
+                $('.btnhp').show();
+            }
+        });
+
+
+        $('body').on('change', '#en1', function () {
+            var data ="id=" +  $(this).val();
+            var url = '@Url.Action("Qlink")';
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: data,
+                success: function (data) {
+
+                }
+             });
+        });
+
+         $('body').on('change', '#en2', function () {
+            var data = "id=" + $(this).val();
+            var url = '@Url.Action("Qlink")';
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: data,
+                success: function (data) {
+
+                }
+             });
+         });
+
+        $('a[data-external="1"]').click(function (e) {
+        var element = $(this);
+        var wlocation = $(this).attr('href');
+        var meid = $(this).data("pdfid")
+        e.preventDefault();
+
+            $('#modalRedirect').each(function () {
+                var element2 = $(this);
+                $(this).fadeIn("fast");
+                $(this).toggleClass('show');
+                $(this).attr('aria-hidden', false);
+                $(this).attr('aria-modal', true);
+
+                if (element.hasClass('pdf')) {
+                    var data = "id=" + meid;
+                    var url = '@Url.Action("GetPdfLink")';
+
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        data: data,
+                        success: function (data2) {
+                            var extlink = data2;
+                            console.log(extlink);
+                           // $(this).find('#continue').attr('href', extlink);
+                            element2.find('#continue').attr('href', extlink);
+                        }
+                    });
+                } else {
+                 //   $(this).find('#continue').attr('href', wlocation);   element2.find('#continue').attr('href', extlink);
+                    element2.find('#continue').attr('href', wlocation);
+                }
+            });
+    });
+
+
+        $('.form-page-edit').submit(function (e) {
+            var checker = 0;
+
+            $('.acc-title').each(function (e) {
+                if ($(this).val() == null) {
+                    checker++;
+                }
+            });
+            if (checker > 0) {
+                alert('An empty Title was detected, remove this section if not needed');
+                return false;
+            }
+        });
+
+    </script>
+
+    <!-- Quick Link Section-->
+</body>
+</html>

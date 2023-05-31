@@ -1,0 +1,421 @@
+﻿@model pagebuilder.Model.Page
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Edit";
+    var vi = 0;
+    //var vx = 0;
+}
+@RenderPage("../Shared/PanelMenu.cshtml")
+
+<style>
+    /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 33px;
+        height: 21px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 13px;
+            width: 13px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(13px);
+        -ms-transform: translateX(13px);
+        transform: translateX(13px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+<div class="panel panel-body page-edit">
+    @using (Html.BeginForm("Edit", "Pages", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-page form-page-edit" }))
+    {
+        @Html.AntiForgeryToken()
+        <input id="ImgNull" type="hidden" name="imgnull" value="0" />
+        <input id="menucollapse" type="hidden" name="menucollapse" value="@Request.QueryString["menucollapse"]" />
+        <input id="pageId" type="hidden" value="@Model.Id" />
+        <div class="form-horizontal">
+            <div class="row form-header">
+                <div class="col-sm-6">
+                    <h4>Edit Page</h4>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="~/Menugroups" class="f-back btn btn-default btn-sm">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (ViewBag.Chk != 1)
+            {
+                <div class="row form-group form-image">
+                    @Html.Label("Image header", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @if (ViewBag.Img == true)
+                                {
+                                    <div class="fi fi-data-img">
+                                        <span class="fdi fdi-remove"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                        <img class="fdi fdi-img" src="~/Pages/RetrieveImage/@Html.DisplayFor(model => model.Id)" alt="" width="250" />
+                                    </div>
+                                    <input type="file" id="upload" name="upload" style="display:none" />
+                                }
+                                else
+                                {
+                                    <input type="file" id="upload" name="upload" onchange="fileCheck(this)" />
+                                }
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control datepicker" }, type = "date" })
+                                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @if (ViewBag.Chk != 1)
+            {
+                <div class="row form-group">
+                    @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Summary, new { htmlAttributes = new { @class = "form-control", @maxlength = "150" } })
+                        <p class="small">(max 150 characters) - <b style="color:red">Summary will show when there is a subpage and Enable Summary is set to Yes.</b></p>
+                        @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    @Html.Label("Enable Summary?", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <span class="pub -yes">
+                            <span class="pl">Yes</span>
+                            @Html.RadioButtonFor(model => model.ShowSum, "1")
+                        </span>
+                        <span class="pub -no">
+                            <span class="pl">No</span>
+                            @Html.RadioButtonFor(model => model.ShowSum, "0")
+                        </span>
+                        @Html.ValidationMessageFor(model => model.Publish, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+
+            <!--
+            <div class="row form-group">
+                @Html.Label("Content Locking", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    <span class="pub -yes">
+                        <span class="pl">Yes</span>
+                        <input type="radio" name="api1" id="api1" value="1" />
+                    </span>
+                    <span class="pub -no">
+                        <span class="pl">No</span>
+                        <input type="radio" name="api1" id="api2" value="0" />
+                    </span>
+
+
+                </div>
+            </div> -->
+            <div id="form-singlecontent" class="form-group form-maintext" style="display:none;" data-content="1">
+                <div class="row form-group">
+                    <div class="col-md-2">
+                        <label for="Maintext">Maintext</label>
+                        <button class="btn btn-primary btn-sm collapse-hidden" type="button" data-target="#form-multiplecontent" data-parentid="#form-singlecontent" aria-expanded="false" aria-controls="form-multipletext">Accordion</button>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Maintext, new { rows = "4", @id = "Maintext", @class = "form-control texteditor" })
+                        @Html.ValidationMessageFor(model => model.Maintext, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            @if (ViewBag.Chk != 1)
+            {
+                <div id="form-multiplecontent" class="form-group form-multipletext" data-content="0">
+                    <div class="row">
+                        <div class="control-label col-md-2">
+                            <label for="multipletext">Multiple Content</label>
+                            <!--<button class="btn btn-primary btn-sm collapse-hidden" type="button" data-target="#form-singlecontent" data-parentid="#form-multiplecontent" aria-expanded="false" aria-controls="form-multipletext">Maintext</button>-->
+                        </div>
+                        <div class="col-md-10">
+                            <div class="accordion pmg-accordion">
+                                <ul style="list-style: none;" id="sortable" class="container-duplicate collapse-body sort-2 collapse show list-group ui-sortable menusort pchild pmg-accordion pmgE pmg-child pmg-subchild">
+                                    @if (ViewBag.Subcontent != null)
+                                    {
+                                        var sequence = 0;
+                                        foreach (var item in ViewBag.Subcontent.ToString().Split(new string[] { "_TWC_" }, StringSplitOptions.None))
+                                        {
+                                            var enable = "false";
+                                            var element = "";
+
+                                            if (Model.PageContents.Any() && item != "")
+                                            {
+                                                enable = Model.PageContents.Select(s => s.Enable).ToArray()[sequence].ToString();
+                                            }
+
+                                            if (enable == "True")
+                                            {
+                                                element = "checked='True'";
+                                            }
+
+                                            var item1 = "";
+                                            var item2 = "";
+
+                                            if (item == "")
+                                            {
+                                                continue;
+                                            }
+
+                                            try
+                                            {
+                                                item1 = item.ToString().Split(new string[] { "_ONC_" }, StringSplitOptions.None)[0];
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                item1 = "";
+                                                continue;
+                                            }
+
+                                            try
+                                            {
+                                                item2 = item.ToString().Split(new string[] { "_ONC_" }, StringSplitOptions.None)[1];
+                                                sequence++;
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                item2 = "";
+                                            }
+
+
+                                            vi++;
+                                            if (true)
+                                            {
+                                                @Html.Raw("<li class='exd-" + vi + " card'>");
+                                                @Html.Raw("     <div class='card-header'>");
+                                                @Html.Raw("         <strong>" + item1 + "</strong>") ;
+                                                @Html.Raw("         <div style='float: right;'>");
+
+                                                if (Model.menuitems == "1")
+
+                                                {
+                                                    @Html.Raw("             <label class='switch' style='margin-right: 10px;'>")
+                                                    @Html.Raw("                 <input type='checkbox' id='enabledCheckbox' name='enabledCheckbox' attr-id='" + vi + "' " + element + ">")
+                                                    @Html.Raw("                 <span class='slider round'></span>")
+                                                    @Html.Raw("             </label> ")
+                                                    @Html.Raw("             <a class='float-left ai ai-expand btn btn-sm  btn-primary lock' data-title='API Locker'  data-toggle='modal' data-target='#ApiModal' aria-expanded='true' aria-controls='InterThoughts-9933'>")
+                                                    @Html.Raw("                 <i class='fa fa-lock' aria-hidden='true'></i>")
+                                                    @Html.Raw("             </a>&nbsp;");
+
+                                                    @Html.Raw("             <a class='float-right ai ai-expand btn btn-sm  btn-primary coll' id='col_" + vi + "' style='display:none' data-toggle='collapse' data-target='#xdv-child-" + vi + "' aria-expanded='true' aria-controls='InterThoughts-9933'>")
+                                                    @Html.Raw("                 <i class='fa fa-list-ul' aria-hidden='true'></i>")
+                                                    @Html.Raw("             </a>");
+
+                                                }
+                                                if (Model.menuitems == "0")
+                                                {
+                                                    @Html.Raw("             <label class='switch' style='margin-right: 10px;'>")
+                                                    @Html.Raw("                 <input type='checkbox id='enabledCheckbox' name='enabledCheckbox' attr-id='" + vi + "'  " + element + ">")
+                                                    @Html.Raw("                 <span class='slider round'></span>")
+                                                    @Html.Raw("             </label> ")
+                                                    @Html.Raw("             <a class='float-left ai ai-expand btn btn-sm  btn-primary lock'  data-title='API Locker'  data-toggle='modal' data-target='#ApiModal' aria-expanded='true' aria-controls='InterThoughts-9933'>")
+                                                    @Html.Raw("                 <i class='fa fa-lock fa-unlock' aria-hidden='true'></i>")
+                                                    @Html.Raw("             </a>&nbsp;");
+
+                                                    @Html.Raw("             <a class='float-right ai ai-expand btn btn-sm  btn-primary coll' id='col_" + vi + "' data-toggle='collapse' data-target='#xdv-child-" + vi + "' aria-expanded='true' aria-controls='InterThoughts-9933'>")
+                                                    @Html.Raw("                 <i class='fa fa-list-ul' aria-hidden='true'></i>")
+                                                    @Html.Raw("             </a>");
+                                                }
+                                                if ((Model.menuitems == null) || (Model.menuitems == ""))
+                                                {
+                                                    @Html.Raw("             <label class='switch' style='margin-right: 10px;'>")
+                                                    @Html.Raw("                 <input type='checkbox' id='enabledCheckbox' name='enabledCheckbox' attr-id='" + vi + "'  " + element + ">")
+                                                    @Html.Raw("                 <span class='slider round'></span>")
+                                                    @Html.Raw("             </label> ")
+                                                    @Html.Raw("             <a class='float-right ai ai-expand btn btn-sm  btn-primary coll' id='col_" + vi + "' data-toggle='collapse' data-target='#xdv-child-" + vi + "' aria-expanded='true' aria-controls='InterThoughts-9933'>")
+                                                    @Html.Raw("                 <i class='fa fa-list-ul' aria-hidden='true'></i>")
+                                                    @Html.Raw("             </a>");
+                                                }
+
+                                                @Html.Raw("         </div>");
+                                                @Html.Raw("     </div>");
+
+                                                @Html.Raw("<div id='xdv-child-" + vi + "' class='fmi fmi-sep fmi-sep-content collapse-body collapse'>");
+
+                                                <input type="hidden" name="enablecontent" id="@(vi)" value="@(enable)" />
+                                                <div class="fmi fmi-sep fmi-sep-title" data-item="@(vi)">
+                                                    <input type="text" class="form-control" name="subcontent" placeholder="Add Subtitle" data-subid="1" value="@(item1)" />
+                                                </div>
+
+                                                <div class="fmi fmi-sep fmi-sep-content" data-item="@(vi)" data-length="@(vi)">
+                                                    <textarea id="textEditor@(vi)" class="form-control fmi fmi-content texteditor" name="subcontent" data-conid="1" rows="4" placeholder="Add Subcontent">@(item2)</textarea>
+                                                    <p class="text-right" style="margin: 0; margin-top: 10px;">
+                                                        <span class="btn btn-sm btn-danger btn-remove-fmi" data-remove="@(vi)">Remove</span>
+                                                    </p>
+                                                </div>
+
+                                                @Html.Raw("</div>");
+                                                @Html.Raw("</li>")
+
+                                            }
+                                        }
+                                        sequence = 0;
+                                    }
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-success btn-sm btn-duplicate" data-container=".container-duplicate"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="row form-group">
+                @Html.LabelFor(model => model.Publish, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <span class="pub -yes">
+                        <span class="pl">Yes</span>
+                        @Html.RadioButtonFor(model => model.Publish, "1")
+                    </span>
+                    <span class="pub -no">
+                        <span class="pl">No</span>
+                        @Html.RadioButtonFor(model => model.Publish, "0")
+                    </span>
+                    @Html.ValidationMessageFor(model => model.Publish, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div id="adv-set" class="collapse multi-collapse">
+                <div class="row form-group">
+                    @Html.LabelFor(model => model.MetaKeywords, "Meta Keywords", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MetaKeywords, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MetaKeywords, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    @Html.LabelFor(model => model.MetaDescription, "Meta Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MetaDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MetaDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group" style="display:none;">
+                    @Html.LabelFor(model => model.AuthorId, "Author", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.AuthorId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AuthorId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group" style="display:none;">
+                    @Html.LabelFor(model => model.PageUrl, "Page URL", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PageUrl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PageUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-offset-2 col-md-10 f-control">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <!--<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#adv-set2" aria-expanded="false" aria-controls="adv-set">Chat</button>-->
+                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#addPasswordDiv" aria-expanded="false" aria-controls="addPasswordDiv">Password</button>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#adv-set" aria-expanded="false" aria-controls="adv-set">Advance</button>
+
+                </div>
+            </div>
+        </div>
+        <div id="adv-set2" class="collapse multi-collapse">
+            <form class="form-page-create form-page-edit">
+                <div class="row form-group">
+                    <label class="control-label">Enable Chat</label>
+                    <div class="col-md-10">
+                        <span class="pub -yes">
+                            <span class="pl">Yes</span>
+                            <input type="radio" name="enchat">
+                        </span>
+                        <span class="pub -no">
+                            <span class="pl">No</span>
+                            <input type="radio" name="enchat">
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="addPasswordDiv" class="collapse" style="padding-top: 10px;">
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label class="control-label">Password</label>
+                </div>
+                <div class="col-md-10 row">
+                    <input type="hidden" name="pageId" value="@Model.Id" />
+                    <div class="col-md-3">
+                        <input class="form-control" type="password" name="newPassword" value="@Model.Password" />
+                    </div>
+                    <div class="col-md-7">
+                        <button class="btn btn-primary ml-2" type="button" id="addPagePasswordButton">Add/Change Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
